@@ -25,10 +25,15 @@ app pre-addressed to Harrison's cell — no backend.
 2. **Deploy:** push to `github.com/bylerent-bot/davis-landworks-site`, enable Pages from `main`
    root (mirrors the Byler Cove sites). Live at `bylerent-bot.github.io/davis-landworks-site/`
    until the custom domain resolves.
-3. **VERIFY BEFORE PUBLIC:** the page states **5.0★ / 39 Google reviews** plus tallies
-   (18 mention stump grinding, 11 punctuality, 7 fair pricing, 5 cleanliness, quality in 8) and
-   quotes three reviews (Jessica, "J 1776", Patrick Clark). Confirm these against Harrison's real
-   Google Business profile before it goes live under his name — ChatGPT generated the numbers.
+3. **Review claims — VERIFIED 2026-09-14** against Harrison's real Google profile.
+   - Real & kept: 5.0 rating, 39 reviews; Jessica quote and Patrick Clark quote (both verbatim
+     from real reviews); grading story + service area (from the Aug 9 owner post).
+   - ChatGPT had FABRICATED these — now corrected on the site: "18 mention stump grinding" →
+     real "11 stump removal"; "11 punctuality" and "5 cleanliness" (no such topics) → real
+     "7 fair pricing" + "6 Hampton Roads cities" + "Owner operated"; "quality in 8 reviews" →
+     softened to no false count; the "J 1776" quote (wasn't his words) → his real visible words.
+   - Real Google review topics for future edits: stump removal 11, fair pricing 7,
+     clean up & haul away 2, professional process 2 (+6 more not expandable in limited view).
 4. **Harrison hasn't seen the copy.** Confirm he's good with it (and whether he already owns any
    domain) before pointing DNS or sharing.
 
