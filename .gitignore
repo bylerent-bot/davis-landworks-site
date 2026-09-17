@@ -1,2 +1,4 @@
-.DS_Store
 *.log
+.DS_Store
+_STATE*
+_archive/
