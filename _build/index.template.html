@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Davis Landworks | Stump Grinding &amp; Grading in Virginia Beach</title>
+<title>Stump Grinding &amp; Grading in Virginia Beach | Davis Landworks</title>
 <meta name="description" content="Stump grinding, grading and light excavation in Virginia Beach, Chesapeake, Norfolk and across Hampton Roads. Call or text Harrison Davis for a free estimate." />
 <link rel="canonical" href="https://davislandworksva.com/" />
 <meta name="theme-color" content="#F4F0E8" />
@@ -14,56 +14,74 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Davis Landworks LLC" />
 <meta property="og:url" content="https://davislandworksva.com/" />
-<meta property="og:title" content="Davis Landworks LLC" />
+<meta property="og:title" content="Davis Landworks | Stump Grinding &amp; Grading in Virginia Beach" />
 <meta property="og:description" content="Stump grinding, grading and dirt work in Hampton Roads. Call or text Harrison Davis for a free estimate." />
 <meta property="og:image" content="https://davislandworksva.com/assets/og.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Davis Landworks LLC logo with the line Stump grinding and grading across Hampton Roads and the phone number 251-243-2422, next to a photo of a yellow Rayco RG45X stump grinder" />
+<meta property="og:image:alt" content="Davis Landworks LLC logo with the line Stump grinding and grading across Hampton Roads and the phone number {{phone_display}}, next to a photo of a yellow Rayco RG45X stump grinder" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Davis Landworks LLC" />
+<meta name="twitter:title" content="Davis Landworks | Stump Grinding &amp; Grading in Virginia Beach" />
 <meta name="twitter:description" content="Stump grinding, grading and dirt work in Hampton Roads. Call or text Harrison Davis for a free estimate." />
 <meta name="twitter:image" content="https://davislandworksva.com/assets/og.jpg" />
-<meta name="twitter:image:alt" content="Davis Landworks LLC logo with the line Stump grinding and grading across Hampton Roads and the phone number 251-243-2422, next to a photo of a yellow Rayco RG45X stump grinder" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@700&amp;family=Saira:wght@400;600;700&amp;display=swap" />
+<meta name="twitter:image:alt" content="Davis Landworks LLC logo with the line Stump grinding and grading across Hampton Roads and the phone number {{phone_display}}, next to a photo of a yellow Rayco RG45X stump grinder" />
 %%PRELOAD%%
-<link rel="stylesheet" href="styles.css" />
+<link rel="preload" href="assets/fonts/saira-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="assets/fonts/saira-semi-condensed-700-latin.woff2" as="font" type="font/woff2" crossorigin />
+%%STYLES%%
 <noscript><style>#estimate-form,.steps{display:none}.mobile-actions{transform:none;visibility:visible}</style></noscript>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "@id": "https://davislandworksva.com/#business",
-  "name": "Davis Landworks LLC",
-  "url": "https://davislandworksva.com/",
-  "telephone": "+1-251-243-2422",
-  "email": "davislandworksllc@gmail.com",
-  "address": {"@type": "PostalAddress", "addressLocality": "Virginia Beach", "addressRegion": "VA", "addressCountry": "US"},
-  "description": "Owner-run stump grinding, grading, light excavation, hauling and cleanup in Hampton Roads, Virginia.",
-  "image": "https://davislandworksva.com/assets/og.jpg",
-  "logo": "https://davislandworksva.com/assets/davis-landworks-logo.png",
-  "hasMap": "https://www.google.com/maps/place/Davis+Landworks+LLC/@36.7955845,-76.1444965,10z/data=!3m1!4b1!4m6!3m5!1s0x47d9ea0cfe7ea383:0x55d0d0ff2a6afbee!8m2!3d36.7955845!4d-76.1444966!16s%2Fg%2F11yx7ln9cz",
-  "sameAs": ["https://www.google.com/maps/place/Davis+Landworks+LLC/@36.7955845,-76.1444965,10z/data=!3m1!4b1!4m6!3m5!1s0x47d9ea0cfe7ea383:0x55d0d0ff2a6afbee!8m2!3d36.7955845!4d-76.1444966!16s%2Fg%2F11yx7ln9cz"],
-  "areaServed": [
-    {"@type": "City", "name": "Virginia Beach, VA"},
-    {"@type": "City", "name": "Chesapeake, VA"},
-    {"@type": "City", "name": "Norfolk, VA"},
-    {"@type": "City", "name": "Suffolk, VA"},
-    {"@type": "City", "name": "Portsmouth, VA"},
-    {"@type": "City", "name": "Hampton, VA"}
-  ],
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Services",
-    "itemListElement": [
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Stump grinding"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Grading and dirt work"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Light excavation"}},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Hauling and cleanup"}}
-    ]
-  }
+  "@graph": [
+    {
+      "@type": "HomeAndConstructionBusiness",
+      "@id": "https://davislandworksva.com/#business",
+      "name": "{{business_name}}",
+      "url": "{{site_url}}",
+      "telephone": "{{phone_schema}}",
+      "email": "{{email}}",
+      "address": {"@type": "PostalAddress", "addressLocality": "Virginia Beach", "addressRegion": "VA", "addressCountry": "US"},
+      "description": "Owner-run stump grinding, grading, light excavation, hauling and cleanup in Hampton Roads, Virginia.",
+      "founder": {"@id": "https://davislandworksva.com/#founder"},
+      "image": ["https://davislandworksva.com/assets/hero/rayco-rg45x-3x2-1600.jpg", "https://davislandworksva.com/assets/og.jpg"],
+      "logo": "https://davislandworksva.com/assets/davis-landworks-logo.png",
+      "hasMap": "{{maps_url}}",
+      "areaServed": [
+        {"@type": "City", "name": "Virginia Beach, VA"},
+        {"@type": "City", "name": "Chesapeake, VA"},
+        {"@type": "City", "name": "Norfolk, VA"},
+        {"@type": "City", "name": "Suffolk, VA"},
+        {"@type": "City", "name": "Portsmouth, VA"},
+        {"@type": "City", "name": "Hampton, VA"}
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Services",
+        "itemListElement": [
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Stump grinding"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Grading and dirt work"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Light excavation"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Hauling and cleanup"}}
+        ]
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://davislandworksva.com/#founder",
+      "name": "{{owner_name}}",
+      "worksFor": {"@id": "https://davislandworksva.com/#business"}
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://davislandworksva.com/#website",
+      "url": "{{site_url}}",
+      "name": "{{brand_name}}",
+      "alternateName": "{{business_name}}",
+      "inLanguage": "en-US",
+      "publisher": {"@id": "https://davislandworksva.com/#business"}
+    }
+  ]
 }
 </script>
 </head>
@@ -78,7 +96,7 @@
     <a href="#services">Services</a>
     <a href="#reviews">Reviews</a>
   </nav>
-  <a class="header-call" href="tel:+12512432422" aria-label="Call Harrison at 251-243-2422"><svg class="i" width="16" height="16" aria-hidden="true"><use href="#i-phone"/></svg><span>Call Harrison</span></a>
+  <a class="header-call" href="tel:{{phone_tel}}" aria-label="Call Harrison at {{phone_display}}"><svg class="i" width="16" height="16" aria-hidden="true"><use href="#i-phone"/></svg><span>Call Harrison</span></a>
 </header>
 
 <main id="main">
@@ -86,13 +104,13 @@
     <div class="hero-text">
       <div class="hero-copy">
         <p class="eyebrow on-dark">Virginia Beach and Hampton Roads</p>
-        <h1 id="hero-title">Stump grinding and grading, done by the owner.</h1>
-        <p class="lede">Harrison Davis runs the machine on every job. We take the stump out, level the yard, haul off what&rsquo;s left and leave the place clean.</p>
+        <h1 id="hero-title">Stump grinding and grading in Virginia Beach, done by the owner.</h1>
+        <p class="lede">Harrison Davis owns the business and runs the machine himself. We grind the stump down, level the yard and clean up when the job is done.</p>
         <div class="hero-actions">
           <a class="btn btn-gold" href="#estimate">Request a free estimate <svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-          <a class="btn btn-outline" href="sms:+12512432422?&amp;body=Hi%20Harrison%2C%20I%20would%20like%20a%20free%20estimate.%20Can%20I%20send%20you%20some%20photos%3F"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-message-square-text"/></svg> Text Harrison</a>
+          <a class="btn btn-outline" href="sms:{{phone_tel}}?&amp;body=Hi%20Harrison%2C%20I%20would%20like%20a%20free%20estimate.%20Can%20I%20send%20you%20some%20photos%3F"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-message-square-text"/></svg> Text Harrison</a>
         </div>
-        <p class="hero-call">Or call Harrison at <a href="tel:+12512432422">251-243-2422</a></p>
+        <p class="hero-call">Or call Harrison at <a href="tel:{{phone_tel}}">{{phone_display}}</a></p>
       </div>
     </div>
     <figure class="hero-photo">
@@ -102,12 +120,12 @@
   </section>
 
   <section class="proof-strip" aria-label="Google reviews">
-    <a class="proof-rating" href="https://www.google.com/maps/place/Davis+Landworks+LLC/@36.7955845,-76.1444965,10z/data=!3m1!4b1!4m6!3m5!1s0x47d9ea0cfe7ea383:0x55d0d0ff2a6afbee!8m2!3d36.7955845!4d-76.1444966!16s%2Fg%2F11yx7ln9cz" target="_blank" rel="noopener"><strong>5.0<span class="star" aria-hidden="true">&#9733;</span></strong><span class="sr-only"> rating from </span><span class="label">39 Google reviews</span><span class="sr-only"> (opens Google Maps in a new tab)</span></a>
+    <a class="proof-rating" href="{{maps_url}}" target="_blank" rel="noopener"><strong>{{review_rating}}<span class="star" aria-hidden="true">&#9733;</span></strong><span class="sr-only"> rating from </span><span class="label">{{review_count}} Google reviews</span><span class="sr-only"> (opens Google Maps in a new tab)</span></a>
     <div class="proof-themes">
       <p class="proof-lead">What people say most in their reviews</p>
       <ul>
-        <li><svg class="i" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg>Stump grinding</li>
         <li><svg class="i" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg>Showing up on time</li>
+        <li><svg class="i" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg>Stump grinding</li>
         <li><svg class="i" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg>Quality of work</li>
         <li><svg class="i" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg>Fair pricing</li>
       </ul>
@@ -125,30 +143,6 @@
       <figure><img src="assets/work/grading-driveway-1600.jpg" srcset="assets/work/grading-driveway-800.jpg 800w, assets/work/grading-driveway-1200.jpg 1200w, assets/work/grading-driveway-1600.jpg 1600w" sizes="(max-width: 759px) 90vw, (max-width: 1440px) 45vw, 640px" width="1600" height="1200" loading="lazy" decoding="async" fetchpriority="low" data-full="assets/work/grading-driveway-full.jpg" alt="Graded strip of soil along a concrete driveway, with a brick garage behind it"><figcaption>Side yard along the driveway</figcaption></figure>
       <figure><img src="assets/work/grading-backyard-1600.jpg" srcset="assets/work/grading-backyard-800.jpg 800w, assets/work/grading-backyard-1200.jpg 1200w, assets/work/grading-backyard-1600.jpg 1600w" sizes="(max-width: 759px) 90vw, (max-width: 1440px) 45vw, 640px" width="1600" height="1200" loading="lazy" decoding="async" fetchpriority="low" data-full="assets/work/grading-backyard-full.jpg" alt="Large graded backyard with machine tracks in the soil, a tree line and a shed at the back"><figcaption>Backyard</figcaption></figure>
     </div>
-    <script>
-    /* Let the hero photo load first on slow connections, then start the gallery photos. */
-    (function () {
-      var hero = document.querySelector('.hero-photo img');
-      if (!hero || hero.complete) return;
-      var blank = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-      var imgs = Array.prototype.slice.call(document.querySelectorAll('.work-gallery img'));
-      imgs.forEach(function (i) {
-        i.setAttribute('data-srcset', i.getAttribute('srcset'));
-        i.setAttribute('data-src', i.getAttribute('src'));
-        i.removeAttribute('srcset');
-        i.src = blank;
-      });
-      var done = false;
-      function go() {
-        if (done) return;
-        done = true;
-        imgs.forEach(function (i) { i.srcset = i.getAttribute('data-srcset'); i.src = i.getAttribute('data-src'); });
-      }
-      hero.addEventListener('load', go);
-      hero.addEventListener('error', go);
-      setTimeout(go, 4000);
-    })();
-    </script>
     <div class="gallery-foot"><a class="text-link" href="#estimate">Request a free estimate <svg class="i" width="16" height="16" aria-hidden="true"><use href="#i-arrow-right"/></svg></a></div>
   </section>
 
@@ -158,24 +152,24 @@
       <p class="section-intro">Pick the one closest to your job and we&rsquo;ll start a free estimate.</p>
     </div>
     <div class="service-grid">
-      <article><h3>Stump grinding</h3><p>Stop mowing around it. We grind stumps down so you can seed or plant over the spot, including the awkward ones grown into <span class="nowrap">chain-link</span> fence or sitting near underground power lines.</p><button type="button" data-choose="Stump grinding">Request this service<span class="sr-only">, stump grinding</span> <svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-arrow-right"/></svg></button></article>
-      <article><h3>Grading &amp; dirt work</h3><p>Low spots, standing water after rain, ruts left behind by a build. We level it out, get the water moving the right way and leave the soil ready for seed.</p><button type="button" data-choose="Grading &amp; dirt work">Request this service<span class="sr-only">, grading and dirt work</span> <svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-arrow-right"/></svg></button></article>
-      <article><h3>Light excavation</h3><p>The small digs a big outfit won&rsquo;t come out for. If it fits a compact machine and a residential lot, it&rsquo;s our size of job.</p><button type="button" data-choose="Light excavation">Request this service<span class="sr-only">, light excavation</span> <svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-arrow-right"/></svg></button></article>
-      <article><h3>Hauling &amp; cleanup</h3><p>Grindings, brush and spoil leave with us. You get your yard back, not a pile to deal with.</p><button type="button" data-choose="Hauling &amp; cleanup">Request this service<span class="sr-only">, hauling and cleanup</span> <svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-arrow-right"/></svg></button></article>
+      <article><h3>Stump grinding</h3><p>Stop mowing around it. We grind stumps down so you can seed or plant over the spot, including the awkward ones grown into <span class="nowrap">chain-link</span> fence or sitting near underground power lines. The grinder is Harrison&rsquo;s Rayco RG45X.</p><a class="card-cta" href="#estimate" data-choose="Stump grinding">Request this service<span class="sr-only">, stump grinding</span> <svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-arrow-right"/></svg></a></article>
+      <article><h3>Grading &amp; dirt work</h3><p>Low spots, standing water after rain, ruts left behind by a build. We level it out, get the water moving the right way and leave the soil ready for seed.</p><a class="card-cta" href="#estimate" data-choose="Grading &amp; dirt work">Request this service<span class="sr-only">, grading and dirt work</span> <svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-arrow-right"/></svg></a></article>
+      <article><h3>Light excavation</h3><p>The small digs a big outfit won&rsquo;t come out for. If it fits a compact machine and a residential lot, it&rsquo;s our size of job.</p><a class="card-cta" href="#estimate" data-choose="Light excavation">Request this service<span class="sr-only">, light excavation</span> <svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-arrow-right"/></svg></a></article>
+      <article><h3>Hauling &amp; cleanup</h3><p>We haul away the debris and clean up the work area when the job is done.</p><a class="card-cta" href="#estimate" data-choose="Hauling &amp; cleanup">Request this service<span class="sr-only">, hauling and cleanup</span> <svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-arrow-right"/></svg></a></article>
     </div>
   </section>
 
   <section class="reviews" id="reviews" aria-labelledby="reviews-title">
     <div class="review-head">
       <div class="review-score">
-        <span class="big-score" aria-hidden="true">5.0</span>
+        <span class="big-score" aria-hidden="true">{{review_rating}}</span>
         <div>
           <div class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          <h2 id="reviews-title"><span class="sr-only">Rated 5.0 from </span>39 Google reviews</h2>
-          <a class="text-link" href="https://www.google.com/maps/place/Davis+Landworks+LLC/@36.7955845,-76.1444965,10z/data=!3m1!4b1!4m6!3m5!1s0x47d9ea0cfe7ea383:0x55d0d0ff2a6afbee!8m2!3d36.7955845!4d-76.1444966!16s%2Fg%2F11yx7ln9cz" target="_blank" rel="noopener">Read reviews on Google<span class="sr-only"> (opens in a new tab)</span> <svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <h2 id="reviews-title"><span class="sr-only">Rated {{review_rating}} from </span>{{review_count}} Google reviews</h2>
+          <a class="text-link" href="{{maps_url}}" target="_blank" rel="noopener">Read reviews on Google<span class="sr-only"> (opens in a new tab)</span> <svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
         </div>
       </div>
-      <p class="review-asof">Rating and review count from Google, September 2026.</p>
+      <p class="review-asof">Rating and review count from Google as of {{reviews_as_of}}.</p>
     </div>
     <figure class="review-feature">
       <div class="stars" role="img" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
@@ -193,10 +187,10 @@
     <svg class="logo logo-reversed owner-logo" viewBox="27.7 27.7 1387.4 415" aria-hidden="true" focusable="false"><use href="#logo" width="1442.8" height="470.4"/></svg>
     <div class="owner-copy">
       <h2 id="owner-title">You deal with us directly.</h2>
-      <p>No office, no salesman, no crew you&rsquo;ve never met. The person who quotes your job is the one who shows up to do it.</p>
+      <p>No call center and no salesman. Your call or text goes straight to Harrison&rsquo;s cell.</p>
       <ul class="owner-points">
-        <li><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-phone"/></svg><a href="tel:+12512432422">Call Harrison at 251-243-2422</a></li>
-        <li><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-message-square-text"/></svg><a href="sms:+12512432422">Text Harrison at 251-243-2422</a></li>
+        <li><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-phone"/></svg><a href="tel:{{phone_tel}}">Call Harrison at {{phone_display}}</a></li>
+        <li><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-message-square-text"/></svg><a href="sms:{{phone_tel}}">Text Harrison at {{phone_display}}</a></li>
       </ul>
     </div>
   </section>
@@ -211,8 +205,8 @@
           <li><span class="step-num" aria-hidden="true">2</span><p>We text back with any questions.</p></li>
           <li><span class="step-num" aria-hidden="true">3</span><p>You get the price before any work starts.</p></li>
         </ol>
-        <p class="estimate-alt">Or skip the form and <a href="tel:+12512432422">call or text Harrison</a>.</p>
-        <noscript><p class="form-note">To request an estimate, text Harrison at 251-243-2422 with your name, the job address and a few photos.</p></noscript>
+        <p class="estimate-alt">Or skip the form and <a href="tel:{{phone_tel}}">call or text Harrison</a>.</p>
+        <noscript><p class="form-note">To request an estimate, call or text Harrison at <a href="tel:{{phone_tel}}">{{phone_display}}</a>. In a text, include your name, the job address and a few photos.</p></noscript>
       </div>
       <form id="estimate-form" novalidate>
         <fieldset>
@@ -222,21 +216,23 @@
             <label class="pill"><input type="radio" name="cservice" value="Grading &amp; dirt work"><span>Grading &amp; dirt work</span><svg class="i chk" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg></label>
             <label class="pill"><input type="radio" name="cservice" value="Light excavation"><span>Light excavation</span><svg class="i chk" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg></label>
             <label class="pill"><input type="radio" name="cservice" value="Hauling &amp; cleanup"><span>Hauling &amp; cleanup</span><svg class="i chk" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg></label>
+            <label class="pill"><input type="radio" name="cservice" value="Not sure yet"><span>Not sure yet</span><svg class="i chk" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg></label>
           </div>
         </fieldset>
         <div class="field-row">
-          <label>Your name<input name="cname" required autocomplete="name" aria-describedby="form-error" placeholder="First and last name" /></label>
-          <label>Mobile number<input name="cphone" required type="tel" autocomplete="tel" inputmode="tel" aria-describedby="form-error" placeholder="(757) 555-0123" /></label>
+          <div class="field"><label>Your name<input name="cname" required autocomplete="name" aria-describedby="err-cname" placeholder="First and last name" /></label><p class="field-error" id="err-cname"></p></div>
+          <div class="field"><label>Mobile number<input name="cphone" required type="tel" autocomplete="tel" inputmode="tel" aria-describedby="err-cphone" placeholder="(757) 555-0123" /></label><p class="field-error" id="err-cphone"></p></div>
         </div>
-        <label>Job address<input name="caddress" required autocomplete="street-address" aria-describedby="form-error" placeholder="Street address or neighborhood" /></label>
         <div class="field-row">
-          <label>Preferred day (optional)<input name="cdate" type="date" aria-describedby="form-error" /></label>
-          <label>Anything else we should know? (optional)<input name="cdetails" placeholder="Job size, gate width, nearby fences" /></label>
+          <div class="field"><label>Job address<input name="caddress" required autocomplete="street-address" aria-describedby="err-caddress" placeholder="Street address or neighborhood" /></label><p class="field-error" id="err-caddress"></p></div>
+          <div class="field"><label>Preferred day (optional)<input name="cdate" autocomplete="off" placeholder="Any weekday morning" /></label></div>
         </div>
+        <div class="field"><label>Anything else we should know? (optional)<textarea name="cdetails" rows="3" placeholder="Job size, gate width, nearby fences"></textarea></label></div>
         <p class="form-error" id="form-error" role="alert"></p>
         <button class="btn btn-gold submit" type="submit">Start a text to Harrison <svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
+        <p class="send-hint">Tap send in Messages to deliver it.</p>
         <p class="form-note">On a phone, this opens a text message for you to review and send. Attach photos of the work area and the way in for the machine.</p>
-        <div role="status"><p class="form-fallback" hidden>If a text did not open, call or text Harrison at <a href="tel:+12512432422">251-243-2422</a>, or <a class="fallback-mail" href="mailto:davislandworksllc@gmail.com">email the details</a>.</p></div>
+        <div role="status"><p class="form-fallback" hidden>If a text did not open, call or text Harrison at <a href="tel:{{phone_tel}}">{{phone_display}}</a>, or <a class="fallback-mail" href="mailto:{{email}}">email the details</a>.</p></div>
       </form>
     </div>
   </section>
@@ -252,15 +248,15 @@
   <a class="footer-brand" href="#top" aria-label="Davis Landworks LLC, back to top"><svg class="logo logo-reversed" viewBox="0 0 1442.8 470.4" role="img" aria-label="Davis Landworks LLC"><use href="#logo"/></svg></a>
   <p class="footer-tagline">Stump grinding, grading, light excavation, hauling and cleanup across Hampton Roads.</p>
   <div class="footer-contact">
-    <a href="tel:+12512432422">251-243-2422</a>
-    <a href="mailto:davislandworksllc@gmail.com">davislandworksllc@gmail.com</a>
+    <a href="tel:{{phone_tel}}">{{phone_display}}</a>
+    <a href="mailto:{{email}}">{{email}}</a>
   </div>
   <p class="footer-legal">&copy; 2026 Davis Landworks LLC</p>
 </footer>
 
 <nav class="mobile-actions" aria-label="Quick contact">
-  <a href="tel:+12512432422"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-phone"/></svg>Call Harrison</a>
-  <a href="sms:+12512432422?&amp;body=Hi%20Harrison%2C%20I%20would%20like%20a%20free%20estimate.%20Can%20I%20send%20you%20some%20photos%3F"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-message-square-text"/></svg>Text Harrison</a>
+  <a href="tel:{{phone_tel}}"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-phone"/></svg>Call Harrison</a>
+  <a href="sms:{{phone_tel}}?&amp;body=Hi%20Harrison%2C%20I%20would%20like%20a%20free%20estimate.%20Can%20I%20send%20you%20some%20photos%3F"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-message-square-text"/></svg>Text Harrison</a>
   <a href="#estimate"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-arrow-right"/></svg>Free estimate</a>
 </nav>
 
@@ -269,7 +265,7 @@
 <script>
 /* Estimate form: builds a text message to Harrison. Nothing is sent from the site. */
 (function () {
-  var PHONE = '+12512432422';
+  var PHONE = '{{phone_tel}}';
   var form = document.getElementById('estimate-form');
   if (!form) return;
   var radios = Array.prototype.slice.call(form.querySelectorAll('input[name="cservice"]'));
@@ -281,7 +277,8 @@
   }
 
   Array.prototype.slice.call(document.querySelectorAll('[data-choose]')).forEach(function (b) {
-    b.addEventListener('click', function () {
+    b.addEventListener('click', function (e) {
+      e.preventDefault();
       var name = b.getAttribute('data-choose');
       radios.forEach(function (r) { r.checked = r.value === name; });
       var est = document.getElementById('estimate'), set = form.querySelector('fieldset');
@@ -293,36 +290,26 @@
     });
   });
 
-  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
-  function today() { var d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
-  var dateInput = form.elements.cdate;
-  dateInput.min = today();
-  dateInput.addEventListener('focus', function () { dateInput.min = today(); });
-  function syncDate() { dateInput.classList.toggle('is-empty', !dateInput.value); }
-  dateInput.addEventListener('input', syncDate);
-  dateInput.addEventListener('change', syncDate);
-  syncDate();
-
-  function readableDay(v) {
-    var p = v.split('-');
-    var dt = new Date(+p[0], +p[1] - 1, +p[2]);
-    if (isNaN(dt)) return v;
-    var o = { weekday: 'short', month: 'short', day: 'numeric' };
-    if (dt.getFullYear() !== new Date().getFullYear()) o.year = 'numeric';
-    return dt.toLocaleDateString('en-US', o);
-  }
-
   var error = document.getElementById('form-error');
   var fallback = form.querySelector('.form-fallback');
-  var LABELS = { cname: 'your name', cphone: 'a mobile number with at least 10 digits', caddress: 'the job address', cdate: 'a preferred day that is not in the past' };
-  var fields = ['cname', 'cphone', 'caddress', 'cdate'].map(function (n) { return form.elements[n]; });
+  var LABELS = { cname: 'your name', cphone: 'a mobile number with 10 digits', caddress: 'the job address' };
+  var MESSAGES = { cname: 'Please add your name.', cphone: 'Please add a mobile number with 10 digits, area code first.', caddress: 'Please add the job address.' };
+  var fields = ['cname', 'cphone', 'caddress'].map(function (n) { return form.elements[n]; });
 
+  /* Keep only the digits and drop a leading US country code, so (757) 555-0123, 757.555.0123 and +1 757 555 0123 all count as 10. */
+  function digits(val) {
+    var d = val.replace(/\D/g, '');
+    return d.length === 11 && d.charAt(0) === '1' ? d.slice(1) : d;
+  }
   function problem(el) {
     var val = el.value.trim();
     if (el.required && !val) return true;
-    if (el.name === 'cphone' && val && val.replace(/\D/g, '').length < 10) return true;
-    if (el.name === 'cdate' && val && val < today()) return true;
+    if (el.name === 'cphone' && digits(val).length !== 10) return true;
     return false;
+  }
+  function mark(el, bad) {
+    el.setAttribute('aria-invalid', bad ? 'true' : 'false');
+    document.getElementById('err-' + el.name).textContent = bad ? MESSAGES[el.name] : '';
   }
   function listText(parts) { return parts.length > 1 ? parts.slice(0, -1).join(', ') + ' and ' + parts[parts.length - 1] : parts[0]; }
   function sayMissing(list) { return list.length ? 'Please add ' + listText(list.map(function (f) { return LABELS[f.name]; })) + '.' : ''; }
@@ -331,7 +318,7 @@
     ['input', 'change'].forEach(function (type) {
       el.addEventListener(type, function () {
         if (el.getAttribute('aria-invalid') === 'true' && !problem(el)) {
-          el.setAttribute('aria-invalid', 'false');
+          mark(el, false);
           error.textContent = sayMissing(fields.filter(function (f) { return f.getAttribute('aria-invalid') === 'true'; }));
         }
       });
@@ -342,7 +329,7 @@
     e.preventDefault();
     fallback.hidden = true;
     var bad = fields.filter(problem);
-    fields.forEach(function (el) { el.setAttribute('aria-invalid', problem(el) ? 'true' : 'false'); });
+    fields.forEach(function (el) { mark(el, problem(el)); });
     if (bad.length) {
       error.textContent = '';
       bad[0].focus();
@@ -358,10 +345,10 @@
     var lines = ['Hi Harrison, I would like a free estimate.'];
     if (chosen()) lines.push('Service: ' + chosen());
     lines.push('Name: ' + v('cname'), 'Phone: ' + v('cphone'), 'Job address: ' + v('caddress'));
-    if (v('cdate')) lines.push('Preferred day: ' + readableDay(v('cdate')));
+    if (v('cdate')) lines.push('Preferred day: ' + v('cdate'));
     if (v('cdetails')) lines.push('Details: ' + v('cdetails'));
     var message = lines.join('\n');
-    fallback.querySelector('.fallback-mail').href = 'mailto:davislandworksllc@gmail.com?subject=' + encodeURIComponent('Estimate request') + '&body=' + encodeURIComponent(message);
+    fallback.querySelector('.fallback-mail').href = 'mailto:{{email}}?subject=' + encodeURIComponent('Estimate request') + '&body=' + encodeURIComponent(message);
     var left = false;
     var onLeave = function () { left = true; };
     document.addEventListener('visibilitychange', onLeave, { once: true });

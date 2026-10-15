@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Page not found | Davis Landworks</title>
+<meta name="robots" content="noindex" />
+<meta name="theme-color" content="#0B0A09" />
+<link rel="icon" href="/assets/icon-davis-d.svg" type="image/svg+xml" />
+<link rel="icon" href="/assets/icon-davis-d.ico" sizes="16x16 32x32" />
+<style>
+/* GitHub Pages serves this file for any missing path, so every URL here is root-relative. */
+@font-face{font-family:"Saira";font-style:normal;font-weight:400 700;font-display:swap;src:url(/assets/fonts/saira-latin.woff2) format("woff2")}
+@font-face{font-family:"Saira Semi Condensed";font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/saira-semi-condensed-700-latin.woff2) format("woff2")}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px 16px;background:#0B0A09;color:#F4F0E8;font-family:"Saira",Arial,Helvetica,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+main{width:100%;max-width:520px}
+.home{display:block;width:min(100%,300px);margin-bottom:36px}
+.logo{display:block;width:100%;height:auto;overflow:visible;--logo-ink:#F4EFE6}
+h1{margin:0 0 28px;font-family:"Saira Semi Condensed","Arial Narrow",Arial,sans-serif;font-size:clamp(30px,7vw,44px);font-weight:700;line-height:1.05}
+ul{list-style:none;margin:0;padding:24px 0 0;border-top:1px solid rgba(244,240,232,.18);display:grid;gap:6px}
+a{color:#fff}
+li a{display:inline-block;padding:8px 0;font-weight:600;text-decoration:underline;text-decoration-color:#AA7B3C;text-underline-offset:4px}
+li a:hover{color:#BA8C4C}
+:focus-visible{outline:3px solid #AA7B3C;outline-offset:3px}
+</style>
+</head>
+<body>
+%%LOGO_SPRITE%%
+<main>
+  <a class="home" href="/" aria-label="{{business_name}}, home page"><svg class="logo" viewBox="0 0 %%LOGO_W%% %%LOGO_H%%" role="img" aria-label="{{business_name}}"><use href="#logo"/></svg></a>
+  <h1>That page is not on this site.</h1>
+  <ul>
+    <li><a href="tel:{{phone_tel}}">Call Harrison at {{phone_display}}</a></li>
+    <li><a href="sms:{{phone_tel}}">Text Harrison at {{phone_display}}</a></li>
+    <li><a href="mailto:{{email}}">Email {{email}}</a></li>
+  </ul>
+</main>
+</body>
+</html>
