@@ -12,7 +12,7 @@
 <link rel="icon" href="assets/icon-davis-d.ico" sizes="16x16 32x32" />
 <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon-davis-d.png" />
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="Davis Landworks LLC" />
+<meta property="og:site_name" content="Davis Landworks" />
 <meta property="og:url" content="https://davislandworksva.com/" />
 <meta property="og:title" content="Davis Landworks | Stump Grinding &amp; Grading in Virginia Beach" />
 <meta property="og:description" content="Stump grinding, grading and dirt work in Hampton Roads. Call or text Harrison Davis for a free estimate." />
@@ -227,12 +227,13 @@ p,blockquote,li{text-wrap:pretty}
 .estimate .pill input{position:absolute;inset:0;width:100%;height:100%;min-height:0;margin:0;padding:0;border:0;background:none;opacity:0;cursor:pointer}
 .pill .chk{visibility:hidden}
 .estimate .pill:has(input:checked){background:var(--gold);border-color:var(--gold);color:var(--black);font-weight:600}
-.pill:has(input:checked) .chk,.pill input:checked~.chk{visibility:visible}
+.pill input:checked~.chk{visibility:visible}
+.pill:has(input:checked) .chk{visibility:visible}
 .estimate .pill:has(input:focus-visible){outline:3px solid var(--gold);outline-offset:3px}
 .service-pills .pill:last-child:nth-child(odd){grid-column:1/-1}
 @supports not selector(:has(*)){
   .estimate .pill input:focus-visible+span{outline:3px solid var(--gold);outline-offset:4px}
-  .estimate .pill input:checked+span{color:var(--gold);font-weight:600}
+  .estimate .pill input:checked+span{color:var(--gold-hover);font-weight:600}
 }
 .field-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .estimate .field{margin-bottom:14px}
