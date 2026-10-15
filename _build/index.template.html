@@ -43,7 +43,6 @@
       "email": "{{email}}",
       "address": {"@type": "PostalAddress", "addressLocality": "Virginia Beach", "addressRegion": "VA", "addressCountry": "US"},
       "description": "Owner-run stump grinding, grading, light excavation, hauling and cleanup in Hampton Roads, Virginia.",
-      "founder": {"@id": "https://davislandworksva.com/#founder"},
       "image": ["https://davislandworksva.com/assets/hero/rayco-rg45x-3x2-1600.jpg", "https://davislandworksva.com/assets/og.jpg"],
       "logo": "https://davislandworksva.com/assets/davis-landworks-logo.png",
       "hasMap": "{{maps_url}}",
@@ -68,7 +67,7 @@
     },
     {
       "@type": "Person",
-      "@id": "https://davislandworksva.com/#founder",
+      "@id": "https://davislandworksva.com/#owner",
       "name": "{{owner_name}}",
       "worksFor": {"@id": "https://davislandworksva.com/#business"}
     },
@@ -225,7 +224,7 @@
         </div>
         <div class="field-row">
           <div class="field"><label>Job address<input name="caddress" required autocomplete="street-address" aria-describedby="err-caddress" placeholder="Street address or neighborhood" /></label><p class="field-error" id="err-caddress"></p></div>
-          <div class="field"><label>Preferred day (optional)<input name="cdate" autocomplete="off" placeholder="Any weekday morning" /></label></div>
+          <div class="field"><label>Preferred day (optional)<input name="cdate" autocomplete="off" placeholder="A day that works for you" /></label></div>
         </div>
         <div class="field"><label>Anything else we should know? (optional)<textarea name="cdetails" rows="3" placeholder="Job size, gate width, nearby fences"></textarea></label></div>
         <p class="form-error" id="form-error" role="alert"></p>
