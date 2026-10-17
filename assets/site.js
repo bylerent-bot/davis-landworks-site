@@ -329,6 +329,7 @@
 (function () {
   if (!('IntersectionObserver' in window)) { document.documentElement.classList.add('bar-always'); return; }
   var watch = [document.querySelector('.hero-actions'), document.getElementById('estimate')].filter(Boolean);
+  if (!watch.length) return;   /* a page with neither (the privacy page) keeps the bar in view */
   var state = watch.map(function () { return false; });
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) { state[watch.indexOf(en.target)] = en.isIntersecting; });

@@ -52,6 +52,7 @@ PAGES = [
     page('stump-grinding.template.html', 'stump-grinding/index.html', '/stump-grinding/', ESTIMATE_ASIDE='', SIZE_HELP='#stump-size'),
     page('yard-grading.template.html', 'yard-grading/index.html', '/yard-grading/', ESTIMATE_ASIDE='', SIZE_HELP='/stump-grinding/#stump-size'),
     page('service-area.template.html', 'service-area/index.html', '/service-area/', ESTIMATE_ASIDE='', SIZE_HELP='/stump-grinding/#stump-size'),
+    page('privacy.template.html', 'privacy/index.html', '/privacy/', index=False),
 ]
 NAV = [('/stump-grinding/', 'Stump grinding'), ('/yard-grading/', 'Yard grading'), ('/service-area/', 'Service area'), ('/#reviews', 'Reviews')]
 TITLE_MAX, DESC_MAX = 65, 160
