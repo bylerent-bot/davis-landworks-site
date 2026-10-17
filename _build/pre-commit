@@ -1,8 +1,8 @@
 #!/bin/sh
-# Refuse a commit when index.html or 404.html is out of date with its sources.
+# Refuse a commit when any built page, 404.html or sitemap.xml is out of date with its sources.
 # Install once per clone: cp _build/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
 root=$(git rev-parse --show-toplevel) || exit 1
 python3 "$root/_build/build_index.py" --check || {
-  echo "pre-commit: run 'python3 _build/build_index.py' and stage index.html and 404.html." >&2
+  echo "pre-commit: run 'python3 _build/build_index.py' and stage the rebuilt pages, 404.html and sitemap.xml." >&2
   exit 1
 }
