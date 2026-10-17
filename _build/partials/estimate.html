@@ -26,8 +26,9 @@
           <div class="field"><label>Your name<input name="cname" required autocomplete="name" aria-describedby="err-cname" placeholder="First and last name" /></label><p class="field-error" id="err-cname"></p></div>
           <div class="field"><label>Mobile number<input name="cphone" required type="tel" autocomplete="tel" inputmode="tel" aria-describedby="err-cphone" placeholder="(757) 555-0123" /></label><p class="field-error" id="err-cphone"></p></div>
         </div>
+        <div class="field"><label>Job address<input name="caddress" required autocomplete="street-address" aria-describedby="err-caddress" placeholder="Street address or neighborhood" /></label><p class="field-error" id="err-caddress"></p></div>
         <div class="field-row">
-          <div class="field"><label>Job address<input name="caddress" required autocomplete="street-address" aria-describedby="err-caddress" placeholder="Street address or neighborhood" /></label><p class="field-error" id="err-caddress"></p></div>
+          <div class="field"><label>Stump size (optional)<input name="csize" autocomplete="off" aria-describedby="help-csize" placeholder="about 18 inches across" /></label><p class="field-help" id="help-csize">Across the widest point, at ground level. <a href="%%SIZE_HELP%%">How to measure</a></p></div>
           <div class="field"><label>Preferred day (optional)<input name="cdate" autocomplete="off" placeholder="A day that works for you" /></label></div>
         </div>
         <div class="field"><label>Anything else we should know? (optional)<textarea name="cdetails" rows="3" placeholder="Job size, gate width, nearby fences"></textarea></label></div>
@@ -37,5 +38,6 @@
         <p class="form-note">On a phone, this opens a text message for you to review and send. Attach photos of the work area and the way in for the machine.</p>
         <div role="status"><p class="form-fallback" hidden>If a text did not open, call or text Harrison at <a href="tel:{{phone_tel}}">{{phone_display}}</a>, or <a class="fallback-mail" href="mailto:{{email}}">email the details</a>.</p></div>
       </form>
+%%ESTIMATE_ASIDE%%
     </div>
   </section>

@@ -45,11 +45,13 @@ read = lambda *p: open(os.path.join(*p), encoding='utf-8').read()
 def page(tpl, out, path, index=True, **slots):
     return {'tpl': tpl, 'out': out, 'path': path, 'index': index, 'slots': slots}
 
+# ESTIMATE_ASIDE: what sits under the form's intro column (the home page carries the stump size guide there).
+# SIZE_HELP: where the form's "How to measure" link goes (the guide on the page, or the one on the stump page).
 PAGES = [
-    page('index.template.html', 'index.html', '/'),
-    page('stump-grinding.template.html', 'stump-grinding/index.html', '/stump-grinding/'),
-    page('yard-grading.template.html', 'yard-grading/index.html', '/yard-grading/'),
-    page('service-area.template.html', 'service-area/index.html', '/service-area/'),
+    page('index.template.html', 'index.html', '/', ESTIMATE_ASIDE='%%STUMP_ASIDE%%', SIZE_HELP='#stump-size'),
+    page('stump-grinding.template.html', 'stump-grinding/index.html', '/stump-grinding/', ESTIMATE_ASIDE='', SIZE_HELP='#stump-size'),
+    page('yard-grading.template.html', 'yard-grading/index.html', '/yard-grading/', ESTIMATE_ASIDE='', SIZE_HELP='/stump-grinding/#stump-size'),
+    page('service-area.template.html', 'service-area/index.html', '/service-area/', ESTIMATE_ASIDE='', SIZE_HELP='/stump-grinding/#stump-size'),
 ]
 NAV = [('/stump-grinding/', 'Stump grinding'), ('/yard-grading/', 'Yard grading'), ('/service-area/', 'Service area'), ('/#reviews', 'Reviews')]
 TITLE_MAX, DESC_MAX = 65, 160
