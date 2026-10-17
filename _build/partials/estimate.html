@@ -11,7 +11,7 @@
         <p class="estimate-alt">Or skip the form and <a href="tel:{{phone_tel}}">call or text Harrison</a>.</p>
         <noscript><p class="form-note">To request an estimate, call or text Harrison at <a href="tel:{{phone_tel}}">{{phone_display}}</a>. In a text, include your name, the job address and a few photos.</p></noscript>
       </div>
-      <form id="estimate-form" novalidate>
+      <form id="estimate-form" novalidate data-phone="{{phone_tel}}" data-email="{{email}}">
         <fieldset>
           <legend>What needs to be done? (optional)</legend>
           <div class="service-pills">

@@ -1,0 +1,259 @@
+/* Davis Landworks, davislandworksva.com: the estimate form, the phone action bar and the photo viewer.
+   Loaded by every page. The business facts (phone, email) come from data attributes on the form, which the
+   build fills from _build/site.json; nothing is typed in here. */
+/* Estimate form: builds a text message to Harrison. Nothing is sent from the site. */
+(function () {
+  var form = document.getElementById('estimate-form');
+  if (!form) return;
+  var PHONE = form.getAttribute('data-phone') || '', EMAIL = form.getAttribute('data-email') || '';
+  var radios = Array.prototype.slice.call(form.querySelectorAll('input[name="cservice"]'));
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function chosen() {
+    var r = radios.filter(function (x) { return x.checked; })[0];
+    return r ? r.value : '';
+  }
+
+  Array.prototype.slice.call(document.querySelectorAll('[data-choose]')).forEach(function (b) {
+    b.addEventListener('click', function (e) {
+      e.preventDefault();
+      var name = b.getAttribute('data-choose');
+      radios.forEach(function (r) { r.checked = r.value === name; });
+      var est = document.getElementById('estimate'), set = form.querySelector('fieldset');
+      var room = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+      var fits = set.getBoundingClientRect().bottom - est.getBoundingClientRect().top + room <= window.innerHeight;
+      (fits ? est : set).scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+      var r = radios.filter(function (x) { return x.checked; })[0];
+      if (r) setTimeout(function () { r.focus({ preventScroll: true }); }, reduce ? 0 : 500);
+    });
+  });
+
+  var error = document.getElementById('form-error');
+  var fallback = form.querySelector('.form-fallback');
+  var LABELS = { cname: 'your name', cphone: 'a mobile number with 10 digits', caddress: 'the job address' };
+  var MESSAGES = { cname: 'Please add your name.', cphone: 'Please add a mobile number with 10 digits, area code first.', caddress: 'Please add the job address.' };
+  var fields = ['cname', 'cphone', 'caddress'].map(function (n) { return form.elements[n]; });
+
+  /* Keep only the digits and drop a leading US country code, so (757) 555-0123, 757.555.0123 and +1 757 555 0123 all count as 10. */
+  function digits(val) {
+    var d = val.replace(/\D/g, '');
+    return d.length === 11 && d.charAt(0) === '1' ? d.slice(1) : d;
+  }
+  function problem(el) {
+    var val = el.value.trim();
+    if (el.required && !val) return true;
+    if (el.name === 'cphone' && digits(val).length !== 10) return true;
+    return false;
+  }
+  function mark(el, bad) {
+    el.setAttribute('aria-invalid', bad ? 'true' : 'false');
+    document.getElementById('err-' + el.name).textContent = bad ? MESSAGES[el.name] : '';
+  }
+  function listText(parts) { return parts.length > 1 ? parts.slice(0, -1).join(', ') + ' and ' + parts[parts.length - 1] : parts[0]; }
+  function sayMissing(list) { return list.length ? 'Please add ' + listText(list.map(function (f) { return LABELS[f.name]; })) + '.' : ''; }
+
+  fields.forEach(function (el) {
+    ['input', 'change'].forEach(function (type) {
+      el.addEventListener(type, function () {
+        if (el.getAttribute('aria-invalid') === 'true' && !problem(el)) {
+          mark(el, false);
+          error.textContent = sayMissing(fields.filter(function (f) { return f.getAttribute('aria-invalid') === 'true'; }));
+        }
+      });
+    });
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    fallback.hidden = true;
+    var bad = fields.filter(problem);
+    fields.forEach(function (el) { mark(el, problem(el)); });
+    if (bad.length) {
+      error.textContent = '';
+      bad[0].focus();
+      setTimeout(function () {
+        error.textContent = sayMissing(bad);
+        error.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+        bad[0].scrollIntoView({ block: 'nearest', behavior: 'instant' });
+      }, 60);
+      return;
+    }
+    error.textContent = '';
+    var v = function (n) { return form.elements[n].value.trim(); };
+    var lines = ['Hi Harrison, I would like a free estimate.'];
+    if (chosen()) lines.push('Service: ' + chosen());
+    lines.push('Name: ' + v('cname'), 'Phone: ' + v('cphone'), 'Job address: ' + v('caddress'));
+    if (v('cdate')) lines.push('Preferred day: ' + v('cdate'));
+    if (v('cdetails')) lines.push('Details: ' + v('cdetails'));
+    var message = lines.join('\n');
+    fallback.querySelector('.fallback-mail').href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('Estimate request') + '&body=' + encodeURIComponent(message);
+    var left = false;
+    var onLeave = function () { left = true; };
+    document.addEventListener('visibilitychange', onLeave, { once: true });
+    window.addEventListener('pagehide', onLeave, { once: true });
+    window.location.href = 'sms:' + PHONE + '?&body=' + encodeURIComponent(message);
+    setTimeout(function () {
+      document.removeEventListener('visibilitychange', onLeave);
+      window.removeEventListener('pagehide', onLeave);
+      if (!left && document.visibilityState === 'visible') fallback.hidden = false;
+    }, 1500);
+  });
+})();
+
+/* Phones: the bottom action bar stays out of the way while the hero buttons or the estimate form are on screen. */
+(function () {
+  if (!('IntersectionObserver' in window)) { document.documentElement.classList.add('bar-always'); return; }
+  var watch = [document.querySelector('.hero-actions'), document.getElementById('estimate')].filter(Boolean);
+  var state = watch.map(function () { return false; });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { state[watch.indexOf(en.target)] = en.isIntersecting; });
+    document.body.classList.toggle('bar-away', state.some(Boolean));
+  }, { rootMargin: '-66px 0px -64px 0px' });
+  document.body.classList.add('bar-away');
+  watch.forEach(function (el) { io.observe(el); });
+})();
+
+/* Click, tap or press Enter on a photo to see it full size. Adapted from the Byler Cove Anne site. */
+(function () {
+  try {
+    var SEL = '.work-gallery img, .photo-walk img, .hero-photo img';
+    var INERT = ['.skip-link', '.site-header', 'main', '.site-footer', '.mobile-actions'];
+    var box, inner, pic, cap, prev, next, list = [], at = 0, tx = 0, ty = 0, one = false, ys = 0, opener = null;
+
+    function ok(m) { return !(m.complete && !m.naturalWidth); }
+    function pool(m) {
+      var g = m.closest('.work-gallery, .photo-walk, .hero-photo') || document;
+      list = Array.prototype.slice.call(g.querySelectorAll('img')).filter(ok);
+    }
+    function big(m) { return m.getAttribute('data-full') || m.currentSrc || m.src; }
+    function say(m) {
+      var f = m.closest('figure'), c = f ? f.querySelector('figcaption') : null;
+      return ((c ? c.textContent : '') || m.getAttribute('alt') || '').trim();
+    }
+    function setInert(on) {
+      INERT.forEach(function (s) {
+        var el = document.querySelector(s);
+        if (!el) return;
+        if (on) el.setAttribute('inert', ''); else el.removeAttribute('inert');
+      });
+    }
+    function lock() {
+      ys = window.pageYOffset || document.documentElement.scrollTop || 0;
+      var b = document.body.style;
+      b.position = 'fixed'; b.top = (-ys) + 'px'; b.left = '0'; b.right = '0'; b.width = '100%';
+    }
+    function unlock() {
+      var b = document.body.style, h = document.documentElement.style;
+      b.position = ''; b.top = ''; b.left = ''; b.right = ''; b.width = '';
+      h.scrollBehavior = 'auto';
+      window.scrollTo(0, ys);
+      h.scrollBehavior = '';
+    }
+    function show(n) {
+      if (!list.length) return;
+      at = (n + list.length) % list.length;
+      var m = list[at], want = big(m), now = m.currentSrc || m.src, t = say(m);
+      pic.alt = m.getAttribute('alt') || '';
+      cap.textContent = t;
+      box.querySelector('.lb-say').textContent = t;
+      cap.style.display = t ? '' : 'none';
+      prev.style.display = next.style.display = list.length > 1 ? '' : 'none';
+      if (pic.getAttribute('src') !== want) {
+        pic.onload = function () { inner.style.visibility = ''; box.classList.remove('loading'); };
+        pic.onerror = function () { pic.onerror = null; inner.style.visibility = ''; box.classList.remove('loading'); pic.src = now; };
+        pic.src = want;
+        if (!pic.complete) { inner.style.visibility = 'hidden'; box.classList.add('loading'); }
+      }
+    }
+    function shut() {
+      box.classList.remove('on');
+      box.setAttribute('aria-hidden', 'true');
+      setInert(false);
+      unlock();
+      pic.onload = pic.onerror = null;
+      inner.style.visibility = '';
+      box.classList.remove('loading');
+      pic.removeAttribute('src');
+      if (opener) opener.focus({ preventScroll: true });
+    }
+    function make() {
+      box = document.createElement('div');
+      box.className = 'lb';
+      box.setAttribute('role', 'dialog');
+      box.setAttribute('aria-modal', 'true');
+      box.setAttribute('aria-label', 'Photo viewer');
+      box.setAttribute('aria-hidden', 'true');
+      box.innerHTML = '<div class="lb-inner"><img class="lb-pic" alt=""><div class="lb-cap" aria-hidden="true"></div></div><p class="lb-say sr-only" aria-live="polite"></p>'
+        + '<button type="button" class="lb-x" aria-label="Close">&times;</button>'
+        + '<button type="button" class="lb-nav lb-prev" aria-label="Previous photo">&#8249;</button>'
+        + '<button type="button" class="lb-nav lb-next" aria-label="Next photo">&#8250;</button>';
+      document.body.appendChild(box);
+      inner = box.querySelector('.lb-inner');
+      pic = box.querySelector('.lb-pic');
+      cap = box.querySelector('.lb-cap');
+      prev = box.querySelector('.lb-prev');
+      next = box.querySelector('.lb-next');
+      box.addEventListener('click', function (e) {
+        if (e.target.closest('.lb-prev')) return show(at - 1);
+        if (e.target.closest('.lb-next')) return show(at + 1);
+        if (e.target === pic) return;
+        shut();
+      });
+      box.addEventListener('touchstart', function (e) {
+        one = e.touches.length === 1;
+        if (one) { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }
+      }, { passive: true });
+      box.addEventListener('touchmove', function (e) { if (e.touches.length > 1) one = false; }, { passive: true });
+      box.addEventListener('touchend', function (e) {
+        if (!one) return;
+        one = false;
+        var vv = window.visualViewport;
+        if (vv && vv.scale > 1.05) return;
+        var dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+        if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy)) show(at + (dx < 0 ? 1 : -1));
+        else if (Math.abs(dy) > 70 && Math.abs(dy) > Math.abs(dx)) shut();
+      }, { passive: true });
+    }
+    function open(m) {
+      if (!box) make();
+      pool(m);
+      var n = list.indexOf(m);
+      if (n < 0) { list = [m]; n = 0; }
+      opener = m;
+      lock();
+      box.classList.add('on');
+      box.setAttribute('aria-hidden', 'false');
+      show(n);
+      setInert(true);
+      box.querySelector('.lb-x').focus({ preventScroll: true });
+    }
+    Array.prototype.slice.call(document.querySelectorAll(SEL)).forEach(function (m) {
+      m.setAttribute('tabindex', '0');
+      m.setAttribute('role', 'button');
+      m.setAttribute('aria-describedby', 'photo-hint');
+      m.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(m); }
+      });
+    });
+    document.addEventListener('click', function (e) {
+      if (e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var t = e.target;
+      if (!t || !t.closest || t.closest('.lb')) return;
+      if (t.tagName !== 'IMG' || !t.matches(SEL) || !ok(t)) return;
+      e.preventDefault();
+      open(t);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (!box || !box.classList.contains('on')) return;
+      if (e.key === 'Escape') shut();
+      else if (e.key === 'ArrowRight') show(at + 1);
+      else if (e.key === 'ArrowLeft') show(at - 1);
+      else if (e.key === 'Tab') {
+        var f = Array.prototype.slice.call(box.querySelectorAll('button')).filter(function (b) { return getComputedStyle(b).display !== 'none'; });
+        var i = f.indexOf(document.activeElement);
+        e.preventDefault();
+        f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
+      }
+    });
+  } catch (err) {}
+})();

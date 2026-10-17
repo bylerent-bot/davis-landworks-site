@@ -11,10 +11,18 @@ Sources (never edit the outputs by hand):
                                 becomes <slug>/index.html (see PAGES below)
   _build/404.template.html      the branded not-found page
   _build/partials/*.html        shared markup, dropped into a page where it says %%NAME%% (icons, head_assets,
-                                header, proof, review_quotes, area_band, estimate, footer, scripts)
-  _build/site.json              the business facts, used as {{key}} tokens
+                                header, proof, review_quotes, area_band, estimate, footer, scripts); a partial
+                                may itself say %%NAME%% for another partial
+  _build/site.json              the business facts, used as {{key}} tokens; <!--if:key-->...<!--end:key--> keeps
+                                its content only when the fact is non-empty, <!--ifnot:key--> the reverse
   styles.css                    inlined into every page as a <style> block
+  assets/site.js                the form, action bar and photo viewer script, loaded by every page with a content
+                                hash in the query string so a change is never served stale; facts reach it through
+                                data attributes the templates fill from site.json, never by editing the script
   _build/icons.svg and assets/davis-landworks-logo.svg, inlined as SVG symbols
+
+Each page in PAGES may carry slot values (%%NAME%% in a partial, filled per page) and may be marked noindex,
+which keeps it out of the sitemap and requires a robots noindex tag instead of a canonical.
 
 Outputs: index.html, <slug>/index.html for each page, 404.html and sitemap.xml.
 
@@ -24,19 +32,24 @@ subfolders, so every asset path is root-absolute), a missing or duplicate h1, a 
 not match the page's path, a duplicate title or description, an internal link to a page or file that does not
 exist, an in-page anchor with no target, and JSON-LD whose business facts disagree with site.json.
 Folders starting with an underscore are not published by GitHub Pages."""
-import os, re, glob, sys, json, subprocess, datetime
+import os, re, glob, sys, json, subprocess, datetime, hashlib
 
 B = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.dirname(B)
 DESK_CAP = 1600   # widest 4:5 hero candidate offered to desktops; the 2000w files stay on disk, unreferenced
 read = lambda *p: open(os.path.join(*p), encoding='utf-8').read()
 
-# template file, output file, URL path
+# template file, output file, URL path, whether search engines may index it (noindex pages stay out of the
+# sitemap), and per-page slot values: %%NAME%% in a partial is filled with the page's value, which may itself
+# name a partial.
+def page(tpl, out, path, index=True, **slots):
+    return {'tpl': tpl, 'out': out, 'path': path, 'index': index, 'slots': slots}
+
 PAGES = [
-    ('index.template.html', 'index.html', '/'),
-    ('stump-grinding.template.html', 'stump-grinding/index.html', '/stump-grinding/'),
-    ('yard-grading.template.html', 'yard-grading/index.html', '/yard-grading/'),
-    ('service-area.template.html', 'service-area/index.html', '/service-area/'),
+    page('index.template.html', 'index.html', '/'),
+    page('stump-grinding.template.html', 'stump-grinding/index.html', '/stump-grinding/'),
+    page('yard-grading.template.html', 'yard-grading/index.html', '/yard-grading/'),
+    page('service-area.template.html', 'service-area/index.html', '/service-area/'),
 ]
 NAV = [('/stump-grinding/', 'Stump grinding'), ('/yard-grading/', 'Yard grading'), ('/service-area/', 'Service area'), ('/#reviews', 'Reviews')]
 TITLE_MAX, DESC_MAX = 65, 160
@@ -56,8 +69,17 @@ def no_hardcoded(tpl, name):
     assert not PHONE_LOOSE.search(tpl), f'{name}: the phone number is hardcoded in some form; use a phone token'
 
 
+COND = re.compile(r'<!--(if|ifnot):([a-z_]+)-->(.*?)<!--end:\2-->', re.S)
+
+
 def fill(tpl, name):
     no_hardcoded(tpl, name)
+    def cond(m):
+        kind, key, body = m.groups()
+        assert key in facts, f'{name}: unknown fact {key} in <!--{kind}:{key}-->'
+        return body if bool(facts[key]) == (kind == 'if') else ''
+    tpl = COND.sub(cond, tpl)
+    assert '<!--if' not in tpl and '<!--end:' not in tpl, f'{name}: unbalanced <!--if--> block'
     def sub(m):
         assert m.group(1) in facts, f'{name}: unknown token {m.group(0)}'
         return facts[m.group(1)]
@@ -94,7 +116,7 @@ def meta(html, name, attr='name'):
     return m.group(1) if m else None
 
 
-def check_page(html, name, path, all_paths):
+def check_page(html, name, path, all_paths, index=True):
     """Per-page structure checks: head tags match the path, one h1, links resolve, JSON-LD agrees."""
     url = SITE_URL + path
     title = re.search(r'<title>(.*?)</title>', html, re.S)
@@ -104,14 +126,17 @@ def check_page(html, name, path, all_paths):
     desc = meta(html, 'description')
     assert desc and len(desc) <= DESC_MAX, f'{name}: description missing or over {DESC_MAX} characters'
     canon = re.search(r'<link rel="canonical" href="([^"]+)"', html)
-    assert canon and canon.group(1) == url, f'{name}: canonical {canon and canon.group(1)} should be {url}'
+    noindex = '<meta name="robots" content="noindex"' in html
+    if index:
+        assert canon and canon.group(1) == url, f'{name}: canonical {canon and canon.group(1)} should be {url}'
+        assert not noindex, f'{name}: indexed page carries a noindex tag'
+    else:
+        assert noindex and not canon, f'{name}: a noindex page needs the robots tag and no canonical'
     assert meta(html, 'og:url', 'property') == url, f'{name}: og:url should be {url}'
     for tag, attr in (('og:title', 'property'), ('og:description', 'property'), ('og:image', 'property'), ('twitter:title', 'name'), ('twitter:description', 'name'), ('twitter:image', 'name')):
         assert meta(html, tag, attr), f'{name}: missing {tag}'
     h1 = re.findall(r'<h1[\s>]', html)
     assert len(h1) == 1, f'{name}: expected one h1, found {len(h1)}'
-    if 'rel="canonical"' in html:
-        assert '<meta name="robots" content="noindex"' not in html, f'{name}: canonical page is noindex'
     ids = set(re.findall(r'\sid="([^"]+)"', html))
     for href in re.findall(r'\s(?:href|src|data-full)="([^"]+)"', html):
         if href.startswith(('http', 'tel:', 'sms:', 'mailto:')):
@@ -198,6 +223,14 @@ css = read(SITE, 'styles.css').strip()
 assert '</style' not in css.lower()
 STYLES = '<style>\n' + css + '\n</style>'
 
+# The one script file. Facts never live in it (it reads them from the form's data attributes), and its content
+# hash goes in the query string of every <script src> so a change is never served from an old cache.
+site_js = read(SITE, 'assets', 'site.js')
+no_hardcoded(site_js, 'assets/site.js')
+for bad in ('\u2014', '\u2013'):
+    assert bad not in site_js, 'assets/site.js: em or en dash found'
+JS_VERSION = hashlib.sha1(site_js.encode('utf-8')).hexdigest()[:10]
+
 # Partials: _build/partials/<name>.html fills %%NAME%%.
 partials = {}
 for p in sorted(glob.glob(os.path.join(B, 'partials', '*.html'))):
@@ -215,17 +248,28 @@ def nav_for(path):
     return '\n'.join(out)
 
 
-def assemble(tpl, name, path):
+def assemble(tpl, pg):
     assert f'viewBox="0 0 {w} {h}"' in partials['HEADER'], 'logo <svg> tags must use viewBox="0 0 w h" of the symbol'
+    name, path = pg['tpl'], pg['path']
     html = tpl
-    for key, body in partials.items():
-        html = html.replace(f'%%{key}%%', body)
+    for _ in range(6):   # partials and slots may nest (the form holds a slot that holds a partial that holds another)
+        before = html
+        for key, body in partials.items():
+            html = html.replace(f'%%{key}%%', body)
+        for key, body in pg['slots'].items():
+            html = html.replace(f'%%{key}%%', body)
+        if html == before:
+            break
     html = (html.replace('%%NAV%%', nav_for(path))
                 .replace('%%SPRITE%%', wrap([icons, logo_sym]))
                 .replace('%%PRELOAD%%', PRELOAD if '%%HERO_PICTURE%%' in html else '')
                 .replace('%%HERO_PICTURE%%', HERO_PICTURE)
-                .replace('%%STYLES%%', STYLES))
-    return guard(fill(html, name), name)
+                .replace('%%STYLES%%', STYLES)
+                .replace('%%JS_VERSION%%', JS_VERSION))
+    html = fill(html, name)
+    if ' id="estimate"' not in html:   # a page without the form sends the footer's estimate links to the home page
+        html = html.replace('href="#estimate"', 'href="/#estimate"')
+    return guard(html, name)
 
 
 # Git-derived lastmod for the sitemap: the newest commit touching the page's template or any shared input,
@@ -238,7 +282,7 @@ def git(*args):
         return None
 
 SHARED = [os.path.relpath(p, SITE) for p in glob.glob(os.path.join(B, 'partials', '*.html'))] + [
-    '_build/site.json', '_build/build_index.py', '_build/icons.svg', 'styles.css', 'assets/davis-landworks-logo.svg']
+    '_build/site.json', '_build/build_index.py', '_build/icons.svg', 'styles.css', 'assets/site.js', 'assets/davis-landworks-logo.svg']
 TODAY = datetime.date.today().isoformat()
 
 def lastmod(tpl_name):
@@ -250,19 +294,20 @@ def lastmod(tpl_name):
 
 
 outputs, seen_titles, seen_descs, ANCHORS = {}, {}, {}, set()
-all_paths = {path for _, _, path in PAGES}
+all_paths = {pg['path'] for pg in PAGES}
 built = []
-for tpl_name, out_name, path in PAGES:
-    html = assemble(read(B, tpl_name), tpl_name, path)
+for pg in PAGES:
+    html = assemble(read(B, pg['tpl']), pg)
     for i in re.findall(r'\sid="([^"]+)"', html):
-        ANCHORS.add((path, i))
-    built.append((tpl_name, out_name, path, html))
-for tpl_name, out_name, path, html in built:
-    title, desc = check_page(html, tpl_name, path, all_paths)
+        ANCHORS.add((pg['path'], i))
+    built.append((pg, html))
+for pg, html in built:
+    tpl_name = pg['tpl']
+    title, desc = check_page(html, tpl_name, pg['path'], all_paths, pg['index'])
     assert title not in seen_titles, f'{tpl_name}: title duplicates {seen_titles[title]}: {title}'
     assert desc not in seen_descs, f'{tpl_name}: description duplicates {seen_descs[desc]}'
     seen_titles[title], seen_descs[desc] = tpl_name, tpl_name
-    outputs[out_name] = html
+    outputs[pg['out']] = html
 home = outputs['index.html']
 biz = [n for n in json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', home, re.S).group(1))['@graph'] if n.get('@id', '').endswith('#business')]
 assert len(biz) == 1 and biz[0]['telephone'] == facts['phone_schema'] and biz[0]['email'] == facts['email'], 'home JSON-LD business node is missing or disagrees with site.json'
@@ -276,8 +321,9 @@ for href in re.findall(r'\shref="(/[^"#]*)"', nf):
 outputs['404.html'] = nf
 
 sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-for tpl_name, out_name, path in PAGES:
-    sm.append(f'  <url><loc>{SITE_URL + path}</loc><lastmod>{lastmod(tpl_name)}</lastmod></url>')
+for pg in PAGES:
+    if pg['index']:
+        sm.append(f'  <url><loc>{SITE_URL + pg["path"]}</loc><lastmod>{lastmod(pg["tpl"])}</lastmod></url>')
 sm.append('</urlset>')
 outputs['sitemap.xml'] = '\n'.join(sm) + '\n'
 
