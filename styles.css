@@ -228,7 +228,35 @@ p,blockquote,li{text-wrap:pretty}
 .form-fallback{color:#fff}
 .send-hint{margin:10px 0 0;color:#fff;font-size:15px;font-weight:600}
 @media (hover:hover) and (pointer:fine){.send-hint{display:none}}
-.form-fallback a,.estimate-head .form-note a{white-space:nowrap;color:#fff;font-weight:700;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:3px}
+.form-fallback a,.form-failed a,.form-note a,.form-done a{white-space:nowrap;color:#fff;font-weight:700;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:3px}
+/* send path: photos, honeypot, switch links, progress, the sent and failed states */
+.hp{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+.estimate input[type=file]{height:auto;padding:10px 12px;cursor:pointer}
+.estimate input[type=file]::file-selector-button{margin-right:12px;padding:8px 12px;border:1px solid rgba(255,255,255,.5);background:transparent;color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+.estimate input[type=file]::file-selector-button:hover{border-color:#fff}
+.photo-count{margin:6px 0 0;color:#fff;font-size:14px;font-weight:600}
+.photo-count:empty{display:none}
+.link-btn{padding:0;border:0;background:none;color:#fff;font:inherit;font-weight:700;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:3px;cursor:pointer}
+.link-btn:hover{color:var(--gold-hover)}
+.send-switch{margin:12px 0 0;color:var(--muted-dark);font-size:14px}
+[data-mode="send"] .send-hint{display:none}
+.note-send{display:none}
+[data-mode="send"] .note-text{display:none}
+[data-mode="send"] .note-send{display:inline}
+.turnstile-box{margin:0 0 14px}
+.turnstile-box:empty{display:none}
+.form-progress{margin:12px 0 0;color:#fff;font-size:15px;font-weight:600}
+.photo-progress{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:4px;color:var(--muted-dark);font-size:14px}
+.form-failed{margin:12px 0 0;color:#fff;font-size:15px;line-height:1.5}
+.form-failed:focus{outline:0}
+.is-busy .submit{opacity:.75;cursor:progress}
+.is-done>:not(.form-done){display:none}
+.form-done{padding:clamp(22px,3vw,32px);background:rgba(255,255,255,.05);border:1px solid var(--line-dark);border-left:4px solid var(--gold)}
+.form-done:focus{outline:0}
+.form-done h3{margin-bottom:12px;color:#fff;font-size:26px}
+.form-done p{margin:0 0 12px;color:var(--muted-dark);font-size:16px;line-height:1.55}
+.form-done p:last-child{margin-bottom:0}
+.form-done strong{color:#fff;font-size:18px}
 
 /* stump size guide: an aside in the estimate column on the home page, a section on the stump page */
 .stump-guide-fig{margin:0 0 16px}

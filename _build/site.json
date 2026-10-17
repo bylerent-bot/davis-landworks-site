@@ -1,5 +1,5 @@
 {
-  "_note": "Facts the build substitutes into _build/index.template.html and _build/404.template.html as {{key}}. Change a fact here, never in the templates. The build fails if a value below appears hardcoded in a template, or if a stale review count or as-of month is left in the output.",
+  "_note": "Facts the build substitutes into the templates and partials as {{key}}. Change a fact here, never in the templates. The build fails if a value below appears hardcoded in a template, or if a stale review count or as-of month is left in the output. lead_api_base is the lead Worker's origin (no trailing slash); empty means the form only builds a text or an email and posts nothing anywhere. turnstile_site_key is the Cloudflare Turnstile site key for the send path; empty means Turnstile never loads. <!--if:key--> blocks in the templates switch copy on these two.",
   "business_name": "Davis Landworks LLC",
   "brand_name": "Davis Landworks",
   "owner_name": "Harrison Davis",
@@ -11,5 +11,7 @@
   "review_rating": "5.0",
   "review_count": "40",
   "reviews_as_of": "October 2026",
-  "maps_url": "https://www.google.com/maps/place/Davis+Landworks+LLC/@36.7955845,-76.1444965,10z/data=!3m1!4b1!4m6!3m5!1s0x47d9ea0cfe7ea383:0x55d0d0ff2a6afbee!8m2!3d36.7955845!4d-76.1444966!16s%2Fg%2F11yx7ln9cz"
+  "maps_url": "https://www.google.com/maps/place/Davis+Landworks+LLC/@36.7955845,-76.1444965,10z/data=!3m1!4b1!4m6!3m5!1s0x47d9ea0cfe7ea383:0x55d0d0ff2a6afbee!8m2!3d36.7955845!4d-76.1444966!16s%2Fg%2F11yx7ln9cz",
+  "lead_api_base": "",
+  "turnstile_site_key": ""
 }

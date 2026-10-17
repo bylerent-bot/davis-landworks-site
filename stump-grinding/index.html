@@ -260,7 +260,35 @@ p,blockquote,li{text-wrap:pretty}
 .form-fallback{color:#fff}
 .send-hint{margin:10px 0 0;color:#fff;font-size:15px;font-weight:600}
 @media (hover:hover) and (pointer:fine){.send-hint{display:none}}
-.form-fallback a,.estimate-head .form-note a{white-space:nowrap;color:#fff;font-weight:700;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:3px}
+.form-fallback a,.form-failed a,.form-note a,.form-done a{white-space:nowrap;color:#fff;font-weight:700;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:3px}
+/* send path: photos, honeypot, switch links, progress, the sent and failed states */
+.hp{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+.estimate input[type=file]{height:auto;padding:10px 12px;cursor:pointer}
+.estimate input[type=file]::file-selector-button{margin-right:12px;padding:8px 12px;border:1px solid rgba(255,255,255,.5);background:transparent;color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+.estimate input[type=file]::file-selector-button:hover{border-color:#fff}
+.photo-count{margin:6px 0 0;color:#fff;font-size:14px;font-weight:600}
+.photo-count:empty{display:none}
+.link-btn{padding:0;border:0;background:none;color:#fff;font:inherit;font-weight:700;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:3px;cursor:pointer}
+.link-btn:hover{color:var(--gold-hover)}
+.send-switch{margin:12px 0 0;color:var(--muted-dark);font-size:14px}
+[data-mode="send"] .send-hint{display:none}
+.note-send{display:none}
+[data-mode="send"] .note-text{display:none}
+[data-mode="send"] .note-send{display:inline}
+.turnstile-box{margin:0 0 14px}
+.turnstile-box:empty{display:none}
+.form-progress{margin:12px 0 0;color:#fff;font-size:15px;font-weight:600}
+.photo-progress{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:4px;color:var(--muted-dark);font-size:14px}
+.form-failed{margin:12px 0 0;color:#fff;font-size:15px;line-height:1.5}
+.form-failed:focus{outline:0}
+.is-busy .submit{opacity:.75;cursor:progress}
+.is-done>:not(.form-done){display:none}
+.form-done{padding:clamp(22px,3vw,32px);background:rgba(255,255,255,.05);border:1px solid var(--line-dark);border-left:4px solid var(--gold)}
+.form-done:focus{outline:0}
+.form-done h3{margin-bottom:12px;color:#fff;font-size:26px}
+.form-done p{margin:0 0 12px;color:var(--muted-dark);font-size:16px;line-height:1.55}
+.form-done p:last-child{margin-bottom:0}
+.form-done strong{color:#fff;font-size:18px}
 
 /* stump size guide: an aside in the estimate column on the home page, a section on the stump page */
 .stump-guide-fig{margin:0 0 16px}
@@ -689,15 +717,15 @@ p,blockquote,li{text-wrap:pretty}
         <p class="estimate-alt">Or skip the form and <a href="tel:+12512432422">call or text Harrison</a>.</p>
         <noscript><p class="form-note">To request an estimate, call or text Harrison at <a href="tel:+12512432422">251-243-2422</a>. In a text, include your name, the job address and a few photos.</p></noscript>
       </div>
-      <form id="estimate-form" novalidate data-phone="+12512432422" data-email="davislandworksllc@gmail.com">
+      <form id="estimate-form" novalidate data-phone="+12512432422" data-email="davislandworksllc@gmail.com" data-lead-api="" data-turnstile-key="">
         <fieldset>
           <legend>What needs to be done? (optional)</legend>
           <div class="service-pills">
-            <label class="pill"><input type="radio" name="cservice" value="Stump grinding"><span>Stump grinding</span><svg class="i chk" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg></label>
-            <label class="pill"><input type="radio" name="cservice" value="Grading &amp; dirt work"><span>Grading &amp; dirt work</span><svg class="i chk" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg></label>
-            <label class="pill"><input type="radio" name="cservice" value="Light excavation"><span>Light excavation</span><svg class="i chk" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg></label>
-            <label class="pill"><input type="radio" name="cservice" value="Hauling &amp; cleanup"><span>Hauling &amp; cleanup</span><svg class="i chk" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg></label>
-            <label class="pill"><input type="radio" name="cservice" value="Not sure yet"><span>Not sure yet</span><svg class="i chk" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg></label>
+            <label class="pill"><input type="radio" name="cservice" value="Stump grinding" data-service="stump"><span>Stump grinding</span><svg class="i chk" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg></label>
+            <label class="pill"><input type="radio" name="cservice" value="Grading &amp; dirt work" data-service="grading"><span>Grading &amp; dirt work</span><svg class="i chk" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg></label>
+            <label class="pill"><input type="radio" name="cservice" value="Light excavation" data-service="excavation"><span>Light excavation</span><svg class="i chk" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg></label>
+            <label class="pill"><input type="radio" name="cservice" value="Hauling &amp; cleanup" data-service="hauling"><span>Hauling &amp; cleanup</span><svg class="i chk" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg></label>
+            <label class="pill"><input type="radio" name="cservice" value="Not sure yet" data-service="other"><span>Not sure yet</span><svg class="i chk" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg></label>
           </div>
         </fieldset>
         <div class="field-row">
@@ -710,11 +738,27 @@ p,blockquote,li{text-wrap:pretty}
           <div class="field"><label>Preferred day (optional)<input name="cdate" autocomplete="off" placeholder="A day that works for you" /></label></div>
         </div>
         <div class="field"><label>Anything else we should know? (optional)<textarea name="cdetails" rows="3" placeholder="Job size, gate width, nearby fences"></textarea></label></div>
+        <div class="field photo-field" hidden><label>Photos (optional, up to 6)<input name="cphotos" type="file" accept="image/*" multiple aria-describedby="help-cphotos" /></label><p class="field-help" id="help-cphotos">The stump or the yard, and the way in for the machine. Photos are made smaller on your device before they are sent.</p><p class="photo-count" aria-live="polite"></p></div>
+        <div class="hp" aria-hidden="true"><label>Website<input name="website" type="text" tabindex="-1" autocomplete="off" /></label></div>
+        <div class="turnstile-box"></div>
         <p class="form-error" id="form-error" role="alert"></p>
-        <button class="btn btn-gold submit" type="submit">Start a text to Harrison <svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
+        <button class="btn btn-gold submit" type="submit"><span class="submit-label">Start a text to Harrison</span> <svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
         <p class="send-hint">Tap send in Messages to deliver it.</p>
-        <p class="form-note">On a phone, this opens a text message for you to review and send. Attach photos of the work area and the way in for the machine.</p>
-        <div role="status"><p class="form-fallback" hidden>If a text did not open, call or text Harrison at <a href="tel:+12512432422">251-243-2422</a>, or <a class="fallback-mail" href="mailto:davislandworksllc@gmail.com">email the details</a>.</p></div>
+
+        <p class="form-note"><span class="note-text">On a phone, this opens a text message for you to review and send. Attach photos of the work area and the way in for the machine.</span><span class="note-send">This goes straight to Harrison. Add photos of the work area and the way in for the machine above.</span></p>
+        <div role="status" aria-live="polite">
+          <p class="form-progress" hidden></p>
+          <ul class="photo-progress" hidden></ul>
+          <p class="form-fallback" hidden>If a text did not open, call or text Harrison at <a href="tel:+12512432422">251-243-2422</a>, or <a class="fallback-mail" href="mailto:davislandworksllc@gmail.com">email the details</a>.</p>
+          <p class="form-failed" hidden tabindex="-1">That did not go through. Call or text Harrison at <a href="tel:+12512432422">251-243-2422</a>, or <a class="fallback-mail" href="mailto:davislandworksllc@gmail.com">email the details</a>. <button type="button" class="link-btn try-again">Try again</button></p>
+        </div>
+        <div class="form-done" id="form-done" hidden tabindex="-1">
+          <p class="eyebrow on-dark">Sent</p>
+          <h3>Harrison has your request.</h3>
+          <p>Your reference is <strong class="done-ref"></strong>. We text back with any questions, and you get the price before any work starts.</p>
+          <p class="done-photos" hidden></p>
+          <p>Need to add something? Call or text Harrison at <a href="tel:+12512432422">251-243-2422</a>.</p>
+        </div>
       </form>
 
     </div>
@@ -756,6 +800,6 @@ p,blockquote,li{text-wrap:pretty}
 
 <p id="photo-hint" hidden>Opens the photo full size</p>
 
-<script src="/assets/site.js?v=66ffba6b5d" defer></script>
+<script src="/assets/site.js?v=76ffab859a" defer></script>
 </body>
 </html>
