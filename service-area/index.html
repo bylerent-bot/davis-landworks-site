@@ -646,7 +646,7 @@ p,blockquote,li{text-wrap:pretty}
         <p class="estimate-alt">Or skip the form and <a href="tel:+12512432422">call or text Harrison</a>.</p>
         <noscript><p class="form-note">To request an estimate, call or text Harrison at <a href="tel:+12512432422">251-243-2422</a>. In a text, include your name, the job address and a few photos.</p></noscript>
       </div>
-      <form id="estimate-form" novalidate data-phone="+12512432422" data-email="davislandworksllc@gmail.com" data-lead-api="" data-turnstile-key="">
+      <form id="estimate-form" novalidate data-phone="+12512432422" data-email="davislandworksllc@gmail.com" data-lead-api="https://leads.davislandworksva.com" data-turnstile-key="0x4AAAAAAFfPsW9YGIcOI0Ke">
         <fieldset>
           <legend>What needs to be done? (optional)</legend>
           <div class="service-pills">
@@ -674,11 +674,13 @@ p,blockquote,li{text-wrap:pretty}
         <button class="btn btn-gold submit" type="submit"><span class="submit-label">Start a text to Harrison</span> <svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
         <p class="send-hint">Tap send in Messages to deliver it.</p>
 
-        <p class="form-note"><span class="note-text">On a phone, this opens a text message for you to review and send. Attach photos of the work area and the way in for the machine.</span><span class="note-send">This goes straight to Harrison. Add photos of the work area and the way in for the machine above.</span> <a href="/privacy/">How we handle your details</a>.</p>
+        <p class="send-switch" hidden>Can&rsquo;t text right now? <button type="button" class="link-btn" data-switch-send>Send it from here instead</button>.</p>
+
+        <p class="form-note"><span class="note-text">On a phone, this opens a text message for you to review and send. Attach photos of the work area and the way in for the machine.</span><span class="note-send">This goes straight to Harrison. Add photos of the work area and the way in for the machine above.</span> We keep a copy of your request so Harrison can follow up. It is never shared or sold. <a href="/privacy/">How we handle your details</a>.</p>
         <div role="status" aria-live="polite">
           <p class="form-progress" hidden></p>
           <ul class="photo-progress" hidden></ul>
-          <p class="form-fallback" hidden>If a text did not open, call or text Harrison at <a href="tel:+12512432422">251-243-2422</a>, or <a class="fallback-mail" href="mailto:davislandworksllc@gmail.com">email the details</a>.</p>
+          <p class="form-fallback" hidden>If a text did not open, call or text Harrison at <a href="tel:+12512432422">251-243-2422</a>, or <a class="fallback-mail" href="mailto:davislandworksllc@gmail.com">email the details</a>. <span class="fallback-send">Or <button type="button" class="link-btn" data-switch-send>send it from here</button>.</span></p>
           <p class="form-failed" hidden tabindex="-1">That did not go through. Call or text Harrison at <a href="tel:+12512432422">251-243-2422</a>, or <a class="fallback-mail" href="mailto:davislandworksllc@gmail.com">email the details</a>. <button type="button" class="link-btn try-again">Try again</button></p>
         </div>
         <div class="form-done" id="form-done" hidden tabindex="-1">
