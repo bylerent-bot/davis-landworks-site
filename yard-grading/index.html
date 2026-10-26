@@ -119,6 +119,8 @@ p,blockquote,li{text-wrap:pretty}
 .site-nav{display:flex;gap:30px;margin-left:auto;font-size:15px;font-weight:600}
 .site-nav a{text-decoration:none;padding:10px 0;white-space:nowrap}
 .site-nav a:hover{color:var(--gold-text)}
+/* Phones: the four header links as one thin row under the header. Plain links, no script; it scrolls away with the page (only the bottom bar stays fixed). */
+.phone-nav{display:none}
 .header-call{display:inline-flex;align-items:center;gap:9px;height:46px;padding:0 18px;background:var(--black);color:#fff;font-size:15px;font-weight:700;text-decoration:none;white-space:nowrap;transition:background-color .15s,color .15s}
 .header-call:hover{background:var(--gold);color:var(--black)}
 
@@ -451,6 +453,10 @@ p,blockquote,li{text-wrap:pretty}
   .site-footer{padding-bottom:calc(104px + env(safe-area-inset-bottom))}
   .brand{width:clamp(150px,44vw,172px)}
   .site-nav{display:none}
+  .phone-nav{display:flex;gap:6px;overflow-x:auto;padding:4px var(--gutter);background:var(--paper);border-bottom:1px solid var(--line);scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .phone-nav::-webkit-scrollbar{display:none}
+  .phone-nav a{flex:0 0 auto;display:flex;align-items:center;min-height:28px;padding:0 12px;border:1px solid var(--line);border-radius:999px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;color:var(--ink)}
+  .phone-nav a[aria-current="page"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
   .header-call{margin-left:auto;height:44px;padding:0 14px;font-size:14px}
   h1{font-size:clamp(40px,11vw,56px)}
   h2{font-size:clamp(32px,9vw,44px)}
@@ -580,6 +586,12 @@ p,blockquote,li{text-wrap:pretty}
   </nav>
   <a class="header-call" href="tel:+12512432422" aria-label="Call Harrison at 251-243-2422"><svg class="i" width="16" height="16" aria-hidden="true"><use href="#i-phone"/></svg><span>Call Harrison</span></a>
 </header>
+<nav class="phone-nav" aria-label="Services">
+    <a href="/stump-grinding/">Stump grinding</a>
+    <a href="/yard-grading/" aria-current="page">Yard grading</a>
+    <a href="/service-area/">Service area</a>
+    <a href="/#reviews">Reviews</a>
+</nav>
 
 <main id="main">
   <section class="page-hero" id="top" aria-labelledby="hero-title">
@@ -665,8 +677,8 @@ p,blockquote,li{text-wrap:pretty}
           <li><span class="step-num" aria-hidden="true">2</span><p>We text back with any questions.</p></li>
           <li><span class="step-num" aria-hidden="true">3</span><p>You get the price before any work starts.</p></li>
         </ol>
-        <p class="estimate-alt">Or skip the form and <a href="tel:+12512432422">call or text Harrison</a>.</p>
-        <noscript><p class="form-note">To request an estimate, call or text Harrison at <a href="tel:+12512432422">251-243-2422</a>. In a text, include your name, the job address and a few photos.</p></noscript>
+        <p class="estimate-alt">Or skip the form and <a href="tel:+12512432422">call Harrison</a> or <a href="sms:+12512432422?&amp;body=Hi%20Harrison%2C%20I%20would%20like%20a%20free%20estimate.%20Can%20I%20send%20you%20some%20photos%3F">text him</a>.</p>
+        <noscript><p class="form-note">To request an estimate, call Harrison at <a href="tel:+12512432422">251-243-2422</a> or <a href="sms:+12512432422?&amp;body=Hi%20Harrison%2C%20I%20would%20like%20a%20free%20estimate.%20Can%20I%20send%20you%20some%20photos%3F">text him</a>. In a text, include your name, the job address and a few photos.</p></noscript>
       </div>
       <form id="estimate-form" novalidate data-phone="+12512432422" data-email="davislandworksllc@gmail.com" data-lead-api="https://leads.davislandworksva.com" data-turnstile-key="0x4AAAAAAFfPsW9YGIcOI0Ke">
         <fieldset>
@@ -685,8 +697,8 @@ p,blockquote,li{text-wrap:pretty}
         </div>
         <div class="field"><label>Job address<input name="caddress" required autocomplete="street-address" aria-describedby="err-caddress" placeholder="Street address or neighborhood" /></label><p class="field-error" id="err-caddress"></p></div>
         <div class="field-row">
-          <div class="field"><label>Stump size (optional)<input name="csize" autocomplete="off" aria-describedby="help-csize" placeholder="about 18 inches across" /></label><p class="field-help" id="help-csize">Across the widest point, at ground level. <a href="/stump-grinding/#stump-size">How to measure</a></p></div>
-          <div class="field"><label>Preferred day (optional)<input name="cdate" autocomplete="off" placeholder="A day that works for you" /></label></div>
+          <div class="field"><label><span class="size-label">Size, if you know it (optional)</span><input name="csize" autocomplete="off" placeholder="a stump&rsquo;s width, or the size of the area" /></label><p class="field-help" id="help-csize" hidden>Across the widest point, at ground level. <a href="/stump-grinding/#stump-size">How to measure</a></p></div>
+          <div class="field"><label>Best day for the work (optional)<input name="cdate" autocomplete="off" aria-describedby="help-cdate" placeholder="A day that works for you" /></label><p class="field-help" id="help-cdate">This is not a booking. Harrison confirms the day with you.</p></div>
         </div>
         <div class="field"><label>Anything else we should know? (optional)<textarea name="cdetails" rows="3" placeholder="Job size, gate width, nearby fences"></textarea></label></div>
         <div class="field photo-field" hidden><label>Photos (optional, up to 6)<input name="cphotos" type="file" accept="image/*" multiple aria-describedby="help-cphotos" /></label><p class="field-help" id="help-cphotos">The stump or the yard, and the way in for the machine. Photos are made smaller on your device before they are sent.</p><p class="photo-count" aria-live="polite"></p></div>
@@ -702,15 +714,15 @@ p,blockquote,li{text-wrap:pretty}
         <div role="status" aria-live="polite">
           <p class="form-progress" hidden></p>
           <ul class="photo-progress" hidden></ul>
-          <p class="form-fallback" hidden>If a text did not open, call or text Harrison at <a href="tel:+12512432422">251-243-2422</a>, or <a class="fallback-mail" href="mailto:davislandworksllc@gmail.com">email the details</a>. <span class="fallback-send">Or <button type="button" class="link-btn" data-switch-send>send it from here</button>.</span></p>
-          <p class="form-failed" hidden tabindex="-1">That did not go through. Call or text Harrison at <a href="tel:+12512432422">251-243-2422</a>, or <a class="fallback-mail" href="mailto:davislandworksllc@gmail.com">email the details</a>. <button type="button" class="link-btn try-again">Try again</button></p>
+          <p class="form-fallback" hidden>If a text did not open, call Harrison at <a href="tel:+12512432422">251-243-2422</a> or <a class="fallback-mail" href="mailto:davislandworksllc@gmail.com">email the details</a>. <span class="fallback-send">Or <button type="button" class="link-btn" data-switch-send>send it from here</button>.</span></p>
+          <p class="form-failed" hidden tabindex="-1">That did not go through. Call Harrison at <a href="tel:+12512432422">251-243-2422</a>, <a href="sms:+12512432422?&amp;body=Hi%20Harrison%2C%20I%20would%20like%20a%20free%20estimate.%20Can%20I%20send%20you%20some%20photos%3F">text him</a>, or <a class="fallback-mail" href="mailto:davislandworksllc@gmail.com">email the details</a>. <button type="button" class="link-btn try-again">Try again</button></p>
         </div>
         <div class="form-done" id="form-done" hidden tabindex="-1">
           <p class="eyebrow on-dark">Sent</p>
           <h3>Harrison has your request.</h3>
           <p>Your reference is <strong class="done-ref"></strong>. We text back with any questions, and you get the price before any work starts.</p>
           <p class="done-photos" hidden></p>
-          <p>Need to add something? Call or text Harrison at <a href="tel:+12512432422">251-243-2422</a>.</p>
+          <p>Need to add something? <a href="sms:+12512432422?&amp;body=Hi%20Harrison%2C%20I%20would%20like%20a%20free%20estimate.%20Can%20I%20send%20you%20some%20photos%3F">Text Harrison</a> or <a href="tel:+12512432422">call him</a> at 251-243-2422.</p>
         </div>
       </form>
 
@@ -754,6 +766,6 @@ p,blockquote,li{text-wrap:pretty}
 
 <p id="photo-hint" hidden>Opens the photo full size</p>
 
-<script src="/assets/site.js?v=63984a2d62" defer></script>
+<script src="/assets/site.js?v=d737c84561" defer></script>
 </body>
 </html>

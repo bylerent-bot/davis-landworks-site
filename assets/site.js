@@ -29,11 +29,36 @@
   function serviceLabel() { var r = chosen(); return r ? r.value : ''; }
   function serviceKey() { var r = chosen(); return (r && r.getAttribute('data-service')) || 'other'; }
 
+  /* The size field follows the service: stump width and the measuring help for
+     stumps, the area for grading and excavation, an amount for hauling, and a
+     plain "size" until a service is picked. One field, so the desk stores it as
+     Size whatever the service. */
+  var SIZES = {
+    stump: ['Stump size (optional)', 'about 18 inches across', 'Stump size', true],
+    grading: ['Rough size of the area (optional)', 'about 30 by 40 feet', 'Area size', false],
+    excavation: ['Rough size of the area (optional)', 'about 30 by 40 feet', 'Area size', false],
+    hauling: ['About how much (optional)', 'a pickup load, a pile by the shed', 'How much', false],
+    other: ['Size, if you know it (optional)', 'a stump\u2019s width, or the size of the area', 'Size', false]
+  };
+  var sizeInput = form.elements.csize, sizeLabel = $('.size-label'), sizeHelp = document.getElementById('help-csize');
+  function sizeFor() { var r = chosen(); return SIZES[(r && r.getAttribute('data-service')) || 'other'] || SIZES.other; }
+  function syncSize() {
+    if (!sizeInput || !sizeLabel) return;
+    var s = sizeFor();
+    sizeLabel.textContent = s[0];
+    sizeInput.placeholder = s[1];
+    if (sizeHelp) sizeHelp.hidden = !s[3];
+    if (s[3]) sizeInput.setAttribute('aria-describedby', 'help-csize'); else sizeInput.removeAttribute('aria-describedby');
+  }
+  radios.forEach(function (r) { r.addEventListener('change', syncSize); });
+  syncSize();
+
   Array.prototype.slice.call(document.querySelectorAll('[data-choose]')).forEach(function (b) {
     b.addEventListener('click', function (e) {
       e.preventDefault();
       var name = b.getAttribute('data-choose');
       radios.forEach(function (r) { r.checked = r.value === name; });
+      syncSize();
       var est = document.getElementById('estimate'), set = form.querySelector('fieldset');
       var room = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
       var fits = set.getBoundingClientRect().bottom - est.getBoundingClientRect().top + room <= window.innerHeight;
@@ -105,8 +130,8 @@
     var lines = ['Hi Harrison, I would like a free estimate.'];
     if (serviceLabel()) lines.push('Service: ' + serviceLabel());
     lines.push('Name: ' + val('cname'), 'Phone: ' + val('cphone'), 'Job address: ' + val('caddress'));
-    if (val('csize')) lines.push('Stump size: ' + val('csize'));
-    if (val('cdate')) lines.push('Preferred day: ' + val('cdate'));
+    if (val('csize')) lines.push(sizeFor()[2] + ': ' + val('csize'));
+    if (val('cdate')) lines.push('Best day: ' + val('cdate'));
     if (val('cdetails')) lines.push('Details: ' + val('cdetails'));
     return lines.join('\n');
   }

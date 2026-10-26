@@ -88,6 +88,8 @@ p,blockquote,li{text-wrap:pretty}
 .site-nav{display:flex;gap:30px;margin-left:auto;font-size:15px;font-weight:600}
 .site-nav a{text-decoration:none;padding:10px 0;white-space:nowrap}
 .site-nav a:hover{color:var(--gold-text)}
+/* Phones: the four header links as one thin row under the header. Plain links, no script; it scrolls away with the page (only the bottom bar stays fixed). */
+.phone-nav{display:none}
 .header-call{display:inline-flex;align-items:center;gap:9px;height:46px;padding:0 18px;background:var(--black);color:#fff;font-size:15px;font-weight:700;text-decoration:none;white-space:nowrap;transition:background-color .15s,color .15s}
 .header-call:hover{background:var(--gold);color:var(--black)}
 
@@ -420,6 +422,10 @@ p,blockquote,li{text-wrap:pretty}
   .site-footer{padding-bottom:calc(104px + env(safe-area-inset-bottom))}
   .brand{width:clamp(150px,44vw,172px)}
   .site-nav{display:none}
+  .phone-nav{display:flex;gap:6px;overflow-x:auto;padding:4px var(--gutter);background:var(--paper);border-bottom:1px solid var(--line);scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .phone-nav::-webkit-scrollbar{display:none}
+  .phone-nav a{flex:0 0 auto;display:flex;align-items:center;min-height:28px;padding:0 12px;border:1px solid var(--line);border-radius:999px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;color:var(--ink)}
+  .phone-nav a[aria-current="page"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
   .header-call{margin-left:auto;height:44px;padding:0 14px;font-size:14px}
   h1{font-size:clamp(40px,11vw,56px)}
   h2{font-size:clamp(32px,9vw,44px)}

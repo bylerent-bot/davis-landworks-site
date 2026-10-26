@@ -8,8 +8,8 @@
           <li><span class="step-num" aria-hidden="true">2</span><p>We text back with any questions.</p></li>
           <li><span class="step-num" aria-hidden="true">3</span><p>You get the price before any work starts.</p></li>
         </ol>
-        <p class="estimate-alt">Or skip the form and <a href="tel:{{phone_tel}}">call or text Harrison</a>.</p>
-        <noscript><p class="form-note">To request an estimate, call or text Harrison at <a href="tel:{{phone_tel}}">{{phone_display}}</a>. In a text, include your name, the job address and a few photos.</p></noscript>
+        <p class="estimate-alt">Or skip the form and <a href="tel:{{phone_tel}}">call Harrison</a> or <a href="sms:{{phone_tel}}?&amp;body=Hi%20Harrison%2C%20I%20would%20like%20a%20free%20estimate.%20Can%20I%20send%20you%20some%20photos%3F">text him</a>.</p>
+        <noscript><p class="form-note">To request an estimate, call Harrison at <a href="tel:{{phone_tel}}">{{phone_display}}</a> or <a href="sms:{{phone_tel}}?&amp;body=Hi%20Harrison%2C%20I%20would%20like%20a%20free%20estimate.%20Can%20I%20send%20you%20some%20photos%3F">text him</a>. In a text, include your name, the job address and a few photos.</p></noscript>
       </div>
       <form id="estimate-form" novalidate data-phone="{{phone_tel}}" data-email="{{email}}" data-lead-api="{{lead_api_base}}" data-turnstile-key="{{turnstile_site_key}}">
         <fieldset>
@@ -28,8 +28,8 @@
         </div>
         <div class="field"><label>Job address<input name="caddress" required autocomplete="street-address" aria-describedby="err-caddress" placeholder="Street address or neighborhood" /></label><p class="field-error" id="err-caddress"></p></div>
         <div class="field-row">
-          <div class="field"><label>Stump size (optional)<input name="csize" autocomplete="off" aria-describedby="help-csize" placeholder="about 18 inches across" /></label><p class="field-help" id="help-csize">Across the widest point, at ground level. <a href="%%SIZE_HELP%%">How to measure</a></p></div>
-          <div class="field"><label>Preferred day (optional)<input name="cdate" autocomplete="off" placeholder="A day that works for you" /></label></div>
+          <div class="field"><label><span class="size-label">Size, if you know it (optional)</span><input name="csize" autocomplete="off" placeholder="a stump&rsquo;s width, or the size of the area" /></label><p class="field-help" id="help-csize" hidden>Across the widest point, at ground level. <a href="%%SIZE_HELP%%">How to measure</a></p></div>
+          <div class="field"><label>Best day for the work (optional)<input name="cdate" autocomplete="off" aria-describedby="help-cdate" placeholder="A day that works for you" /></label><p class="field-help" id="help-cdate">This is not a booking. Harrison confirms the day with you.</p></div>
         </div>
         <div class="field"><label>Anything else we should know? (optional)<textarea name="cdetails" rows="3" placeholder="Job size, gate width, nearby fences"></textarea></label></div>
         <div class="field photo-field" hidden><label>Photos (optional, up to 6)<input name="cphotos" type="file" accept="image/*" multiple aria-describedby="help-cphotos" /></label><p class="field-help" id="help-cphotos">The stump or the yard, and the way in for the machine. Photos are made smaller on your device before they are sent.</p><p class="photo-count" aria-live="polite"></p></div>
@@ -45,15 +45,15 @@
         <div role="status" aria-live="polite">
           <p class="form-progress" hidden></p>
           <ul class="photo-progress" hidden></ul>
-          <p class="form-fallback" hidden>If a text did not open, call or text Harrison at <a href="tel:{{phone_tel}}">{{phone_display}}</a>, or <a class="fallback-mail" href="mailto:{{email}}">email the details</a>.<!--if:lead_api_base--> <span class="fallback-send">Or <button type="button" class="link-btn" data-switch-send>send it from here</button>.</span><!--end:lead_api_base--></p>
-          <p class="form-failed" hidden tabindex="-1">That did not go through. Call or text Harrison at <a href="tel:{{phone_tel}}">{{phone_display}}</a>, or <a class="fallback-mail" href="mailto:{{email}}">email the details</a>. <button type="button" class="link-btn try-again">Try again</button></p>
+          <p class="form-fallback" hidden>If a text did not open, call Harrison at <a href="tel:{{phone_tel}}">{{phone_display}}</a> or <a class="fallback-mail" href="mailto:{{email}}">email the details</a>.<!--if:lead_api_base--> <span class="fallback-send">Or <button type="button" class="link-btn" data-switch-send>send it from here</button>.</span><!--end:lead_api_base--></p>
+          <p class="form-failed" hidden tabindex="-1">That did not go through. Call Harrison at <a href="tel:{{phone_tel}}">{{phone_display}}</a>, <a href="sms:{{phone_tel}}?&amp;body=Hi%20Harrison%2C%20I%20would%20like%20a%20free%20estimate.%20Can%20I%20send%20you%20some%20photos%3F">text him</a>, or <a class="fallback-mail" href="mailto:{{email}}">email the details</a>. <button type="button" class="link-btn try-again">Try again</button></p>
         </div>
         <div class="form-done" id="form-done" hidden tabindex="-1">
           <p class="eyebrow on-dark">Sent</p>
           <h3>Harrison has your request.</h3>
           <p>Your reference is <strong class="done-ref"></strong>. We text back with any questions, and you get the price before any work starts.</p>
           <p class="done-photos" hidden></p>
-          <p>Need to add something? Call or text Harrison at <a href="tel:{{phone_tel}}">{{phone_display}}</a>.</p>
+          <p>Need to add something? <a href="sms:{{phone_tel}}?&amp;body=Hi%20Harrison%2C%20I%20would%20like%20a%20free%20estimate.%20Can%20I%20send%20you%20some%20photos%3F">Text Harrison</a> or <a href="tel:{{phone_tel}}">call him</a> at {{phone_display}}.</p>
         </div>
       </form>
 %%ESTIMATE_ASIDE%%

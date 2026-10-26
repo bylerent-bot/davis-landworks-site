@@ -119,6 +119,8 @@ p,blockquote,li{text-wrap:pretty}
 .site-nav{display:flex;gap:30px;margin-left:auto;font-size:15px;font-weight:600}
 .site-nav a{text-decoration:none;padding:10px 0;white-space:nowrap}
 .site-nav a:hover{color:var(--gold-text)}
+/* Phones: the four header links as one thin row under the header. Plain links, no script; it scrolls away with the page (only the bottom bar stays fixed). */
+.phone-nav{display:none}
 .header-call{display:inline-flex;align-items:center;gap:9px;height:46px;padding:0 18px;background:var(--black);color:#fff;font-size:15px;font-weight:700;text-decoration:none;white-space:nowrap;transition:background-color .15s,color .15s}
 .header-call:hover{background:var(--gold);color:var(--black)}
 
@@ -451,6 +453,10 @@ p,blockquote,li{text-wrap:pretty}
   .site-footer{padding-bottom:calc(104px + env(safe-area-inset-bottom))}
   .brand{width:clamp(150px,44vw,172px)}
   .site-nav{display:none}
+  .phone-nav{display:flex;gap:6px;overflow-x:auto;padding:4px var(--gutter);background:var(--paper);border-bottom:1px solid var(--line);scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .phone-nav::-webkit-scrollbar{display:none}
+  .phone-nav a{flex:0 0 auto;display:flex;align-items:center;min-height:28px;padding:0 12px;border:1px solid var(--line);border-radius:999px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;color:var(--ink)}
+  .phone-nav a[aria-current="page"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
   .header-call{margin-left:auto;height:44px;padding:0 14px;font-size:14px}
   h1{font-size:clamp(40px,11vw,56px)}
   h2{font-size:clamp(32px,9vw,44px)}
@@ -561,6 +567,12 @@ p,blockquote,li{text-wrap:pretty}
   </nav>
   <a class="header-call" href="tel:+12512432422" aria-label="Call Harrison at 251-243-2422"><svg class="i" width="16" height="16" aria-hidden="true"><use href="#i-phone"/></svg><span>Call Harrison</span></a>
 </header>
+<nav class="phone-nav" aria-label="Services">
+    <a href="/stump-grinding/">Stump grinding</a>
+    <a href="/yard-grading/">Yard grading</a>
+    <a href="/service-area/">Service area</a>
+    <a href="/#reviews">Reviews</a>
+</nav>
 
 <main id="main">
   <section class="page-hero" id="top" aria-labelledby="hero-title">
@@ -568,7 +580,7 @@ p,blockquote,li{text-wrap:pretty}
       <nav class="crumbs on-dark" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Privacy</li></ol></nav>
       <p class="eyebrow on-dark">Privacy</p>
       <h1 id="hero-title">What we keep when you ask for an estimate.</h1>
-      <p class="lede">The short version: what you put in the form goes to Harrison and nobody else.</p>
+      <p class="lede">The short version: what you put in the form goes to Harrison so he can answer you. It is never sold, and never shared for anyone&rsquo;s marketing.</p>
     </div>
   </section>
 
@@ -576,19 +588,19 @@ p,blockquote,li{text-wrap:pretty}
     <div class="prose">
 
       <h2>What the form keeps.</h2>
-      <p>Your name, your mobile number, the job address, the service you picked, the stump size if you gave one, a preferred day, anything you wrote in the details box, and any photos you added. The form also notes which website or search sent you to us, so we know where our work comes from.</p>
+      <p>Your name, your mobile number, the job address, the service you picked, the size if you gave one, the best day for the work, anything you wrote in the details box, and any photos you added. The form also notes which website or search sent you to us, so we know where our work comes from.</p>
       <h2>What it is used for.</h2>
-      <p>Answering your request. Harrison reads it, texts or calls you back with any questions, and gives you a price. To estimate how far a job is from us, we look up the job address with the U.S. Census Bureau's free address geocoder. That is the whole use. It is never shared or sold.</p>
+      <p>Answering your request. Harrison reads it, texts or calls you back with any questions, and gives you a price. To estimate how far a job is from us, we look up the job address with the U.S. Census Bureau's free address geocoder. That is the whole use.</p>
       <h2>Photos.</h2>
       <p>Photos are made smaller on your phone or computer before they are sent, to about 1600 pixels on the long side. That step also strips the location and camera details a photo carries. We keep the photos with your request.</p>
       <h2>On a phone.</h2>
-      <p>On a phone, the form opens a text message to Harrison for you to send. We also keep a copy of what you typed into the form so he can follow up. If you skip the form and just text or call, nothing is kept on this site.</p>
+      <p>On a phone, the form opens a text message to Harrison for you to send. We also keep a copy of what you typed into the form so he can follow up. If you skip the form and just text or call, nothing is kept on this site unless Harrison adds your job to his records himself.</p>
       <h2>How long we keep it.</h2>
-      <p>For a limited time, then the personal details are removed. If you want them removed sooner, text or call Harrison and ask.</p>
+      <p>We keep your request while it may be needed for your job. If you hire Harrison, the job and payment records are kept for seven years for tax purposes. If you want your details removed, text or call Harrison and he will have them taken out, except what the payment record for a job you paid for has to keep.</p>
 
 
       <h2>Questions.</h2>
-      <p>Call or text Harrison at <a href="tel:+12512432422">251-243-2422</a>, or email <a href="mailto:davislandworksllc@gmail.com">davislandworksllc@gmail.com</a>.</p>
+      <p>Call Harrison at <a href="tel:+12512432422">251-243-2422</a>, <a href="sms:+12512432422?&amp;body=Hi%20Harrison%2C%20I%20would%20like%20a%20free%20estimate.%20Can%20I%20send%20you%20some%20photos%3F">text him</a>, or email <a href="mailto:davislandworksllc@gmail.com">davislandworksllc@gmail.com</a>.</p>
       <p class="updated">Last updated October 2026.</p>
     </div>
   </section>
@@ -621,6 +633,6 @@ p,blockquote,li{text-wrap:pretty}
 
 <p id="photo-hint" hidden>Opens the photo full size</p>
 
-<script src="/assets/site.js?v=63984a2d62" defer></script>
+<script src="/assets/site.js?v=d737c84561" defer></script>
 </body>
 </html>
