@@ -32,7 +32,7 @@
           <div class="field"><label>Best day for the work (optional)<input name="cdate" autocomplete="off" aria-describedby="help-cdate" placeholder="A day that works for you" /></label><p class="field-help" id="help-cdate">This is not a booking. Harrison confirms the day with you.</p></div>
         </div>
         <div class="field"><label>Anything else we should know? (optional)<textarea name="cdetails" rows="3" placeholder="Job size, gate width, nearby fences"></textarea></label></div>
-        <div class="field photo-field" hidden><label>Photos (optional, up to 6)<input name="cphotos" type="file" accept="image/*" multiple aria-describedby="help-cphotos" /></label><p class="field-help" id="help-cphotos">The stump or the yard, and the way in for the machine. Photos are made smaller on your device before they are sent.</p><p class="photo-count" aria-live="polite"></p></div>
+        <div class="field photo-field" hidden><label>Photos (optional, up to 6)<input name="cphotos" type="file" accept="image/*" multiple aria-describedby="help-cphotos" /></label><p class="field-help" id="help-cphotos">The stump or the yard, and how the machine gets in. Photos are made smaller on your device before they are sent.</p><p class="photo-count" aria-live="polite"></p></div>
         <div class="hp" aria-hidden="true"><label>Website<input name="website" type="text" tabindex="-1" autocomplete="off" /></label></div>
         <div class="turnstile-box"></div>
         <p class="form-error" id="form-error" role="alert"></p>
@@ -41,7 +41,7 @@
 <!--if:lead_api_base-->
         <p class="send-switch" hidden>Can&rsquo;t text right now? <button type="button" class="link-btn" data-switch-send>Send it from here instead</button>.</p>
 <!--end:lead_api_base-->
-        <p class="form-note"><span class="note-text">On a phone, this opens a text message for you to review and send. Attach photos of the work area and the way in for the machine.</span><span class="note-send">This goes straight to Harrison. Add photos of the work area and the way in for the machine above.</span><!--if:lead_api_base--> We keep a copy of your request so Harrison can follow up. It is never shared or sold.<!--end:lead_api_base--> <a href="/privacy/">How we handle your details</a>.</p>
+        <p class="form-note"><span class="note-text">On a phone, this opens a text message for you to review and send. Attach photos of the work area.</span><span class="note-send">This goes straight to Harrison. Add photos of the work area above.</span><!--if:lead_api_base--> We keep a copy of your request so Harrison can follow up. It is never shared or sold.<!--end:lead_api_base--> <a href="/privacy/">How we handle your details</a>.</p>
         <div role="status" aria-live="polite">
           <p class="form-progress" hidden></p>
           <ul class="photo-progress" hidden></ul>
@@ -51,7 +51,7 @@
         <div class="form-done" id="form-done" hidden tabindex="-1">
           <p class="eyebrow on-dark">Sent</p>
           <h3>Harrison has your request.</h3>
-          <p>Your reference is <strong class="done-ref"></strong>. We text back with any questions, and you get the price before any work starts.</p>
+          <p>Your reference is <strong class="done-ref"></strong>. We&rsquo;ll text back with any questions.</p>
           <p class="done-photos" hidden></p>
           <p>Need to add something? <a href="sms:{{phone_tel}}?&amp;body=Hi%20Harrison%2C%20I%20would%20like%20a%20free%20estimate.%20Can%20I%20send%20you%20some%20photos%3F">Text Harrison</a> or <a href="tel:{{phone_tel}}">call him</a> at {{phone_display}}.</p>
         </div>
