@@ -208,6 +208,8 @@ p,blockquote,li{text-wrap:pretty}
 /* owner */
 .owner{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(40px,8vw,130px);align-items:center;padding:var(--section-y) var(--gutter);background:var(--black);color:#fff}
 .owner-logo{max-width:460px}
+.owner-photo{margin:0;max-width:520px;background:var(--black-2)}
+.owner-photo img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
 .owner-copy>p{color:var(--muted-dark);font-size:18px;max-width:32em;margin:18px 0 26px}
 .owner-points{list-style:none;padding:20px 0 0;margin:0;border-top:1px solid var(--line-dark);display:grid;gap:14px;font-weight:600}
 .owner-points li{display:flex;align-items:center;gap:12px}
@@ -391,6 +393,8 @@ p,blockquote,li{text-wrap:pretty}
 .photo-walk figure{position:relative;margin:0}
 .photo-walk img{width:100%;aspect-ratio:4/3;object-fit:cover;background:#d8cdbb;cursor:zoom-in}
 .photo-walk figcaption{margin-top:12px;color:var(--muted);font-size:15px;line-height:1.5}
+.photo-walk.tall{grid-template-columns:repeat(4,minmax(0,1fr))}
+.photo-walk.tall img{aspect-ratio:2/3}
 .photo-walk img:focus-visible{outline:none}
 .photo-walk figure:has(img:focus-visible)::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;outline:3px solid var(--gold);outline-offset:-3px;box-shadow:inset 0 0 0 6px var(--black)}
 @supports not selector(:has(*)){
@@ -403,6 +407,7 @@ p,blockquote,li{text-wrap:pretty}
   .owner{gap:clamp(32px,6vw,96px)}
 }
 @media (max-width:1199px){
+  .photo-walk.tall{grid-template-columns:repeat(2,minmax(0,1fr))}
   .hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   .city-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -465,6 +470,8 @@ p,blockquote,li{text-wrap:pretty}
   .hero-call{display:none}
   .work-gallery,.photo-walk,.city-grid{grid-template-columns:1fr;gap:12px}
   .photo-walk{gap:22px}
+  .photo-walk.tall{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px}
+  .photo-walk.tall figcaption{margin-top:8px;font-size:14px}
   .city-grid{gap:0}
   .gallery-foot{justify-content:flex-start}
   .service-grid{grid-template-columns:1fr}
