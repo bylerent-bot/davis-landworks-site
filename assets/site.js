@@ -1,4 +1,4 @@
-/* Davis Landworks, davislandworksva.com: the estimate form, the phone action bar and the photo viewer.
+/* Davis Landworks, davislandworksva.com: the estimate form, the phone action bar, the photo viewer and visit counting.
    Loaded by every page. The business facts (phone, email), the lead API base and the Turnstile key come from
    data attributes on the form, which the build fills from _build/site.json; nothing is typed in here. */
 
@@ -506,5 +506,46 @@
         f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
       }
     });
+  } catch (err) {}
+})();
+
+/* Visit counting for the desk's Marketing page: one beacon for each page view and each tap on a call, text or email
+   link, with the page and where the visit came from (the dl-src kept above). No cookies; the desk keeps no IP.
+   Opening any page once with ?nocount=1 stops counting that browser (Harrison's and Patrick's own phones),
+   and ?nocount=0 starts it again. Pages without the estimate form carry no API base and send nothing. */
+(function () {
+  try {
+    var el = document.querySelector('[data-lead-api]');
+    var API = el ? (el.getAttribute('data-lead-api') || '').trim().replace(/\/+$/, '') : '';
+    if (!API || !('sendBeacon' in navigator)) return;
+    var q = new URLSearchParams(window.location.search);
+    if (q.has('nocount')) {
+      try {
+        if (q.get('nocount') === '0') localStorage.removeItem('dl-nocount');
+        else localStorage.setItem('dl-nocount', '1');
+      } catch (e) {}
+      q.delete('nocount');
+      var rest = q.toString();
+      history.replaceState(null, '', window.location.pathname + (rest ? '?' + rest : '') + window.location.hash);
+    }
+    try { if (localStorage.getItem('dl-nocount') === '1') return; } catch (e) {}
+    var send = function (kind) {
+      var s = {};
+      try { s = JSON.parse(sessionStorage.getItem('dl-src') || 'null') || {}; } catch (e) {}
+      try {
+        navigator.sendBeacon(API + '/api/visit', new URLSearchParams({
+          k: kind, p: window.location.pathname, r: s.referrer_host || '', us: s.utm_source || '', um: s.utm_medium || ''
+        }).toString());
+      } catch (e) {}
+    };
+    send('view');
+    document.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+      if (!a) return;
+      var href = a.getAttribute('href') || '';
+      if (/^tel:/i.test(href)) send('call');
+      else if (/^sms:/i.test(href)) send('text');
+      else if (/^mailto:/i.test(href)) send('email');
+    }, true);
   } catch (err) {}
 })();
