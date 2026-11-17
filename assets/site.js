@@ -425,7 +425,9 @@
       inner.style.visibility = '';
       box.classList.remove('loading');
       pic.removeAttribute('src');
-      if (opener) opener.focus({ preventScroll: true });
+      var back = opener, hs = back && back.closest ? back.closest('.hero-slide') : null;
+      if (hs && !hs.classList.contains('is-on')) back = document.querySelector('.hero-slide.is-on img');
+      if (back) back.focus({ preventScroll: true });
     }
     function make() {
       box = document.createElement('div');
@@ -506,6 +508,105 @@
         f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
       }
     });
+  } catch (err) {}
+})();
+
+/* Before and after: the invisible range input over the photos sets where the before photo ends and the after begins. */
+(function () {
+  try {
+    Array.prototype.slice.call(document.querySelectorAll('.ba-range')).forEach(function (r) {
+      var f = r.closest('.ba-frame');
+      if (!f) return;
+      function set() {
+        var v = Math.round(r.value);
+        f.style.setProperty('--pos', v + '%');
+        r.setAttribute('aria-valuetext', v + ' percent before, ' + (100 - v) + ' percent after');
+      }
+      r.addEventListener('input', set);
+      r.addEventListener('change', set);
+      set();
+    });
+  } catch (err) {}
+})();
+
+/* Home hero: fades between the finished-work photos. The first is in the page; the rest are filled in from their
+   data-src once the page has loaded. Dots pick a photo, the last button holds or resumes the rotation, and it never
+   starts for a visitor who asked for reduced motion. A mouse over the photo or keyboard focus on it holds it too,
+   as does the open photo viewer. Runs after the photo viewer so the hidden photos leave the tab order. */
+(function () {
+  try {
+    var fig = document.querySelector('.hero-photo[data-slides]');
+    if (!fig) return;
+    var slides = Array.prototype.slice.call(fig.querySelectorAll('.hero-slide'));
+    if (slides.length < 2) return;
+    var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var at = 0, timer = null, held = still, over = false;
+    var bar = document.createElement('div');
+    bar.className = 'hero-dots';
+    var dots = slides.map(function (s, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'dot';
+      b.setAttribute('aria-label', 'Show photo ' + (i + 1) + ' of ' + slides.length);
+      b.addEventListener('click', function () { load(slides[i]); go(i); held = true; paint(); });
+      bar.appendChild(b);
+      return b;
+    });
+    var hold = document.createElement('button');
+    hold.type = 'button';
+    hold.className = 'hold';
+    hold.addEventListener('click', function () { held = !held; if (!held) over = false; paint(); });
+    bar.appendChild(hold);
+    fig.appendChild(bar);
+    function load(s) {
+      Array.prototype.slice.call(s.querySelectorAll('[data-srcset]')).forEach(function (e) {
+        e.setAttribute('srcset', e.getAttribute('data-srcset'));
+        e.removeAttribute('data-srcset');
+      });
+      var m = s.querySelector('img[data-src]');
+      if (m) { m.setAttribute('src', m.getAttribute('data-src')); m.removeAttribute('data-src'); }
+    }
+    function ready(s) { var m = s.querySelector('img'); return !!(m && m.complete && m.naturalWidth); }
+    function viewing() { return !!document.querySelector('.lb.on'); }
+    function tick() {
+      var nx = slides[(at + 1) % slides.length];
+      if (viewing()) return;
+      if (!ready(nx)) { load(nx); return; }
+      go(at + 1);
+      load(slides[(at + 1) % slides.length]);
+    }
+    function go(n) {
+      at = (n + slides.length) % slides.length;
+      slides.forEach(function (s, i) {
+        var on = i === at, m = s.querySelector('img');
+        s.classList.toggle('is-on', on);
+        if (m) {
+          if (on) { m.setAttribute('tabindex', '0'); m.removeAttribute('aria-hidden'); }
+          else { m.setAttribute('tabindex', '-1'); m.setAttribute('aria-hidden', 'true'); }
+        }
+        dots[i].setAttribute('aria-current', on ? 'true' : 'false');
+      });
+    }
+    function paint() {
+      hold.textContent = held ? '\u25B6' : '\u275A\u275A';
+      hold.setAttribute('aria-label', held ? 'Play the photos' : 'Pause the photos');
+      clearInterval(timer);
+      timer = null;
+      if (!held && !over && !document.hidden) timer = setInterval(tick, 5500);
+    }
+    var mouse = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    function inBar(e) { return !!(e.target && e.target.closest && e.target.closest('.hero-dots')); }
+    if (mouse) {
+      fig.addEventListener('mouseenter', function () { over = true; paint(); });
+      fig.addEventListener('mouseleave', function () { over = false; paint(); });
+    }
+    fig.addEventListener('focusin', function (e) { if (inBar(e)) return; over = true; paint(); });
+    fig.addEventListener('focusout', function (e) { if (inBar(e)) return; over = false; paint(); });
+    function warm() { if (!still) load(slides[1]); }
+    if (document.readyState === 'complete') warm(); else window.addEventListener('load', warm);
+    document.addEventListener('visibilitychange', paint);
+    go(0);
+    paint();
   } catch (err) {}
 })();
 

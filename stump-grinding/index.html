@@ -19,14 +19,13 @@
 <meta property="og:image" content="https://davislandworksva.com/assets/og.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Davis Landworks LLC logo with the line Stump grinding and grading across Hampton Roads and the phone number 251-243-2422, next to a photo of a yellow Rayco RG45X stump grinder" />
+<meta property="og:image:alt" content="Davis Landworks LLC logo with the line Stump grinding and grading across Hampton Roads and the phone number 251-243-2422, next to a photo of a yellow stump grinder" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Stump Grinding &amp; Removal in Virginia Beach | Davis Landworks" />
 <meta name="twitter:description" content="Stump grinding in Virginia Beach and Hampton Roads. Text Harrison Davis a photo of the stump for a free estimate." />
 <meta name="twitter:image" content="https://davislandworksva.com/assets/og.jpg" />
-<meta name="twitter:image:alt" content="Davis Landworks LLC logo with the line Stump grinding and grading across Hampton Roads and the phone number 251-243-2422, next to a photo of a yellow Rayco RG45X stump grinder" />
-<link rel="preload" as="image" type="image/webp" imagesrcset="/assets/hero/rayco-rg45x-3x2-800.webp 800w, /assets/hero/rayco-rg45x-3x2-900.webp 900w, /assets/hero/rayco-rg45x-3x2-1200.webp 1200w, /assets/hero/rayco-rg45x-3x2-1600.webp 1600w" imagesizes="100vw" media="(max-width: 959px)" fetchpriority="high" />
-<link rel="preload" as="image" type="image/webp" imagesrcset="/assets/hero/rayco-rg45x-4x5-1200.webp 1200w, /assets/hero/rayco-rg45x-4x5-1600.webp 1600w" imagesizes="(max-width: 1199px) 50vw, 55vw" media="(min-width: 960px)" fetchpriority="high" />
+<meta name="twitter:image:alt" content="Davis Landworks LLC logo with the line Stump grinding and grading across Hampton Roads and the phone number 251-243-2422, next to a photo of a yellow stump grinder" />
+
 <link rel="preload" href="/assets/fonts/saira-latin.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/saira-semi-condensed-700-latin.woff2" as="font" type="font/woff2" crossorigin />
 <style>
@@ -135,8 +134,15 @@ p,blockquote,li{text-wrap:pretty}
 .hero-call a{position:relative;color:#fff;font-weight:700;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px}
 .hero-photo{position:relative;margin:0;overflow:hidden;background:var(--black-2)}
 .hero-photo picture,.hero-photo img{position:absolute;inset:0;width:100%;height:100%}
-.hero-photo img{object-fit:cover;object-position:50% 56%;cursor:zoom-in}
-.hero-photo figcaption{position:absolute;right:16px;bottom:14px;padding:7px 10px;background:rgba(11,10,9,.74);color:var(--ivory);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
+.hero-photo img{object-fit:cover;object-position:50% 50%;cursor:zoom-in}
+.hero-slide{z-index:0;opacity:0;pointer-events:none;transition:opacity 0s linear .9s}
+.hero-slide.is-on{z-index:1;opacity:1;pointer-events:auto;transition:opacity .9s ease}
+.hero-dots{position:absolute;right:14px;bottom:14px;z-index:3;display:flex;align-items:center;gap:2px;padding:4px 6px;background:rgba(11,10,9,.74)}
+.hero-dots button{position:relative;width:28px;height:28px;padding:0;border:0;background:none;color:var(--ivory);cursor:pointer}
+.hero-dots .dot::before{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;border:1.5px solid var(--ivory)}
+.hero-dots .dot[aria-current="true"]::before{background:var(--gold);border-color:var(--gold)}
+.hero-dots .hold{margin-left:4px;font-size:11px;line-height:1;letter-spacing:.06em}
+.hero-dots button:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
 
 /* clickable photos: visible focus frame */
 .work-gallery img:focus-visible,.hero-photo img:focus-visible{outline:none}
@@ -395,6 +401,28 @@ p,blockquote,li{text-wrap:pretty}
 .photo-walk figcaption{margin-top:12px;color:var(--muted);font-size:15px;line-height:1.5}
 .photo-walk.tall{grid-template-columns:repeat(4,minmax(0,1fr))}
 .photo-walk.tall img{aspect-ratio:2/3}
+/* before and after: two registered photos stacked, the top (after) one clipped from the left at --pos. A full-size invisible range input
+   is the control, so dragging, tapping and the arrow keys all work; the site script copies its value into --pos. */
+.ba-section{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,520px);gap:clamp(32px,6vw,96px);align-items:center}
+.ba-copy h2{margin-bottom:18px}
+.ba-copy .gallery-foot{justify-content:flex-start;margin-top:32px}
+.ba{margin:0}
+.ba-frame{--pos:50%;position:relative;aspect-ratio:3/4;overflow:hidden;background:#d8cdbb}
+.ba-img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover}
+.ba-top{clip-path:inset(0 0 0 var(--pos))}
+.ba-tag{position:absolute;top:12px;padding:6px 10px;font-size:12px;font-weight:600;line-height:1.2;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
+.ba-tag-before{left:12px;background:rgba(11,10,9,.78);color:var(--ivory)}
+.ba-tag-after{right:12px;background:var(--gold);color:var(--black)}
+.ba-range{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;opacity:0;cursor:ew-resize;touch-action:pan-y;-webkit-appearance:none;appearance:none;background:none}
+.ba-range::-webkit-slider-thumb{-webkit-appearance:none;width:1px;height:1px}
+.ba-range::-moz-range-thumb{width:1px;height:1px;border:0}
+.ba-line{position:absolute;top:0;bottom:0;left:var(--pos);width:3px;margin-left:-1.5px;background:var(--gold);pointer-events:none}
+.ba-knob{position:absolute;top:50%;left:clamp(26px,var(--pos),calc(100% - 26px));display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:var(--gold);color:var(--black);border:2px solid var(--ivory);font-size:22px;font-weight:700;line-height:1;letter-spacing:2px;padding-bottom:3px;box-shadow:0 2px 10px rgba(11,10,9,.4);pointer-events:none}
+.ba-range:focus-visible~.ba-knob{outline:3px solid transparent;outline-offset:2px;box-shadow:0 0 0 3px var(--black),0 0 0 6px var(--ivory)}
+@media (forced-colors:active){.ba-line{background:CanvasText}.ba-knob{border-color:CanvasText}.ba-range:focus-visible~.ba-knob{outline-color:Highlight}}
+.ba-hint{margin-top:10px;color:var(--muted);font-size:14px}
+.prose-photo{margin:0;max-width:440px}
+.prose-photo img{display:block;width:100%;height:auto;background:#d8cdbb}
 .photo-walk img:focus-visible{outline:none}
 .photo-walk figure:has(img:focus-visible)::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;outline:3px solid var(--gold);outline-offset:-3px;box-shadow:inset 0 0 0 6px var(--black)}
 @supports not selector(:has(*)){
@@ -437,13 +465,15 @@ p,blockquote,li{text-wrap:pretty}
   .footer-contact{text-align:left}
 }
 @media (max-width:959px){
+  .ba-section{grid-template-columns:1fr;gap:28px}
+  .ba{max-width:520px}
+  .ba-copy .gallery-foot{margin-top:22px}
   .two-col{grid-template-columns:1fr;gap:32px}
   .plain-steps{grid-template-columns:1fr;gap:18px}
   .page-hero .lede{margin:12px 0 20px;font-size:17px;line-height:1.55}
   .hero{grid-template-columns:1fr;min-height:0;padding-left:0}
   .hero-photo{order:-1;aspect-ratio:3/2}
-  .hero-photo img{object-position:50% 55%}
-  .hero-photo figcaption{display:none}
+  .hero-dots{right:10px;bottom:10px}
   .hero-text{padding:22px var(--pad) 36px}
   .hero-copy{max-width:640px}
   .hero .lede{margin:12px 0 20px;font-size:17px;line-height:1.55}
@@ -518,11 +548,11 @@ p,blockquote,li{text-wrap:pretty}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .work-gallery img,.mobile-actions{transition:none}
+  .work-gallery img,.mobile-actions,.hero-slide{transition:none}
   .work-gallery figure:hover img{transform:none}
 }
 </style>
-<noscript><style>#estimate-form,.steps{display:none}.mobile-actions{transform:none;visibility:visible}</style></noscript>
+<noscript><style>#estimate-form,.steps{display:none}.mobile-actions{transform:none;visibility:visible}.ba-range,.ba-line,.ba-knob,.ba-hint{display:none}</style></noscript>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -542,7 +572,7 @@ p,blockquote,li{text-wrap:pretty}
       "name": "Stump grinding",
       "serviceType": "Stump grinding",
       "url": "https://davislandworksva.com/stump-grinding/",
-      "description": "Stump grinding and removal for residential yards in Virginia Beach and Hampton Roads, run by the owner on a Rayco RG45X.",
+      "description": "Stump grinding and removal for residential yards in Virginia Beach and Hampton Roads, run by the owner.",
       "provider": {"@id": "https://davislandworksva.com/#business"},
       "areaServed": [
         {"@type": "City", "name": "Virginia Beach, VA"},
@@ -560,7 +590,7 @@ p,blockquote,li{text-wrap:pretty}
       "name": "Stump Grinding & Removal in Virginia Beach | Davis Landworks",
       "isPartOf": {"@id": "https://davislandworksva.com/#website"},
       "about": {"@id": "https://davislandworksva.com/stump-grinding/#service"},
-      "primaryImageOfPage": "https://davislandworksva.com/assets/hero/rayco-rg45x-3x2-1600.jpg"
+      "primaryImageOfPage": "https://davislandworksva.com/assets/work/ba-stump-fence-after-1200.jpg"
     },
     {
       "@type": "BreadcrumbList",
@@ -602,29 +632,18 @@ p,blockquote,li{text-wrap:pretty}
 </nav>
 
 <main id="main">
-  <section class="hero" id="top" aria-labelledby="hero-title">
-    <div class="hero-text">
-      <div class="hero-copy">
-        <nav class="crumbs on-dark" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Stump grinding</li></ol></nav>
-        <p class="eyebrow on-dark">Stump grinding</p>
-        <h1 id="hero-title">Stump grinding and removal in Virginia Beach and Hampton Roads.</h1>
-        <p class="lede">Harrison runs the grinder himself, a Rayco RG45X. Text a photo of the stump and he&rsquo;ll send you a price.</p>
-        <div class="hero-actions">
-          <a class="btn btn-gold" href="#estimate" data-choose="Stump grinding">Request a free estimate <svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-          <a class="btn btn-outline" href="sms:+12512432422?&amp;body=Hi%20Harrison%2C%20I%20would%20like%20a%20free%20estimate%20for%20stump%20grinding.%20Can%20I%20send%20you%20some%20photos%3F"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-message-square-text"/></svg> Text Harrison</a>
-        </div>
-        <p class="hero-call">Or call Harrison at <a href="tel:+12512432422">251-243-2422</a></p>
+  <section class="page-hero" id="top" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <nav class="crumbs on-dark" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Stump grinding</li></ol></nav>
+      <p class="eyebrow on-dark">Stump grinding</p>
+      <h1 id="hero-title">Stump grinding and removal in Virginia Beach and Hampton Roads.</h1>
+      <p class="lede">Harrison runs the grinder himself. Text a photo of the stump and he&rsquo;ll send you a price.</p>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="#estimate" data-choose="Stump grinding">Request a free estimate <svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        <a class="btn btn-outline" href="sms:+12512432422?&amp;body=Hi%20Harrison%2C%20I%20would%20like%20a%20free%20estimate%20for%20stump%20grinding.%20Can%20I%20send%20you%20some%20photos%3F"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-message-square-text"/></svg> Text Harrison</a>
       </div>
+      <p class="hero-call">Or call Harrison at <a href="tel:+12512432422">251-243-2422</a></p>
     </div>
-    <figure class="hero-photo">
-      <picture>
-        <source media="(min-width: 960px)" type="image/webp" srcset="/assets/hero/rayco-rg45x-4x5-1200.webp 1200w, /assets/hero/rayco-rg45x-4x5-1600.webp 1600w" sizes="(max-width: 1199px) 50vw, 55vw">
-        <source media="(min-width: 960px)" srcset="/assets/hero/rayco-rg45x-4x5-1200.jpg 1200w, /assets/hero/rayco-rg45x-4x5-1600.jpg 1600w" sizes="(max-width: 1199px) 50vw, 55vw">
-        <source type="image/webp" srcset="/assets/hero/rayco-rg45x-3x2-800.webp 800w, /assets/hero/rayco-rg45x-3x2-900.webp 900w, /assets/hero/rayco-rg45x-3x2-1200.webp 1200w, /assets/hero/rayco-rg45x-3x2-1600.webp 1600w" sizes="100vw">
-        <img src="/assets/hero/rayco-rg45x-3x2-1200.jpg" srcset="/assets/hero/rayco-rg45x-3x2-800.jpg 800w, /assets/hero/rayco-rg45x-3x2-900.jpg 900w, /assets/hero/rayco-rg45x-3x2-1200.jpg 1200w, /assets/hero/rayco-rg45x-3x2-1600.jpg 1600w" sizes="100vw" width="1200" height="800" fetchpriority="high" decoding="async" data-full="/assets/hero/rayco-rg45x-full-2000.jpg" alt="Yellow Rayco RG45X stump grinder parked on wood chips in a fenced backyard">
-        </picture>
-      <figcaption>Harrison&rsquo;s Rayco RG45X</figcaption>
-    </figure>
   </section>
 
   <section class="proof-strip" aria-label="Google reviews">
@@ -638,6 +657,25 @@ p,blockquote,li{text-wrap:pretty}
         <li><svg class="i" width="16" height="16" aria-hidden="true"><use href="#i-check"/></svg>Fair pricing</li>
       </ul>
     </div>
+  </section>
+
+  <section class="page-section bg-sand ba-section" id="before-after" aria-labelledby="before-after-title">
+    <div class="ba-copy">
+      <h2 id="before-after-title">One we ground out in September.</h2>
+      <p class="section-intro">The same spot, a day apart.</p>
+    </div>
+    <figure class="ba">
+      <div class="ba-frame">
+        <img class="ba-img" src="/assets/work/ba-stump-fence-before-900.jpg" srcset="/assets/work/ba-stump-fence-before-600.jpg 600w, /assets/work/ba-stump-fence-before-900.jpg 900w, /assets/work/ba-stump-fence-before-1200.jpg 1200w" sizes="(max-width: 959px) min(92vw, 520px), 520px" width="900" height="1200" loading="lazy" decoding="async" alt="Before: a tree stump beside a wood fence and a firewood rack">
+        <img class="ba-img ba-top" src="/assets/work/ba-stump-fence-after-900.jpg" srcset="/assets/work/ba-stump-fence-after-600.jpg 600w, /assets/work/ba-stump-fence-after-900.jpg 900w, /assets/work/ba-stump-fence-after-1200.jpg 1200w" sizes="(max-width: 959px) min(92vw, 520px), 520px" width="900" height="1200" loading="lazy" decoding="async" alt="After: the same spot with the stump ground out">
+        <span class="ba-tag ba-tag-before" aria-hidden="true">Before</span>
+        <span class="ba-tag ba-tag-after" aria-hidden="true">After</span>
+        <input class="ba-range" type="range" min="0" max="100" step="1" value="50" autocomplete="off" aria-label="Before and after comparison">
+        <span class="ba-line" aria-hidden="true"></span>
+        <span class="ba-knob" aria-hidden="true">&#8249;&#8250;</span>
+      </div>
+      <figcaption class="ba-hint">Drag the line across the photo.</figcaption>
+    </figure>
   </section>
 
   <section class="page-section bg-paper" aria-labelledby="jobs-title">
@@ -658,6 +696,7 @@ p,blockquote,li{text-wrap:pretty}
         <p>We grind the stump down and clean up. You can seed or plant over the spot. If the rest of the yard needs leveling, <a href="/yard-grading/">we do that too</a>.</p>
         <h3>Getting the machine in.</h3>
         <p>Send a photo of the gate or side yard along with the stump, so we know the grinder fits.</p>
+        <figure class="prose-photo"><img src="/assets/hero/rayco-rg45x-3x2-800.jpg" srcset="/assets/hero/rayco-rg45x-3x2-800.jpg 800w, /assets/hero/rayco-rg45x-3x2-1200.jpg 1200w" sizes="(max-width: 959px) 92vw, 40vw" width="800" height="533" loading="lazy" decoding="async" alt="Stump grinder parked in a fenced backyard"></figure>
       </div>
     </div>
   </section>
@@ -828,6 +867,6 @@ p,blockquote,li{text-wrap:pretty}
 
 <p id="photo-hint" hidden>Opens the photo full size</p>
 
-<script src="/assets/site.js?v=9b462eba21" defer></script>
+<script src="/assets/site.js?v=8f21e7f242" defer></script>
 </body>
 </html>

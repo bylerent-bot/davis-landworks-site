@@ -36,7 +36,6 @@ import os, re, glob, sys, json, subprocess, datetime, hashlib
 
 B = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.dirname(B)
-DESK_CAP = 1600   # widest 4:5 hero candidate offered to desktops; the 2000w files stay on disk, unreferenced
 read = lambda *p: open(os.path.join(*p), encoding='utf-8').read()
 
 # template file, output file, URL path, whether search engines may index it (noindex pages stay out of the
@@ -194,31 +193,39 @@ logo_sym = f'<symbol id="logo" viewBox="{vb}"><path style="fill:var(--logo-ink,#
 wrap = lambda syms: '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">\n' + '\n'.join(syms) + '\n</svg>'
 w, h = vb.split()[2:]
 
-# Hero picture and preloads (root-absolute, so any page can carry the hero).
+# Hero: finished work, not the machine. The home page's hero is a short set of finished-yard photos; the first is
+# the page's main image (preloaded, in a <picture>), the rest load after the page and assets/site.js fades between them.
+# Each slide is assets/hero/<name>-4x5-<w>.jpg for desktops and <name>-3x2-<w>.jpg for phones.
 H = os.path.join(SITE, 'assets', 'hero')
-def have(pat, cap=None):
+HERO_SLIDES = [
+    ('yard-front-house', 'Graded front yard of a brick house', '/assets/work/grading-front-house-full.jpg'),
+    ('yard-driveway', 'Graded side yard beside a driveway', '/assets/work/grading-driveway-full.jpg'),
+    ('yard-backyard', 'Graded backyard with trees behind it', '/assets/work/grading-backyard-full.jpg'),
+]
+def have(pat):
     out = []
     for p in glob.glob(os.path.join(H, pat)):
-        m = re.search(r'-(\d+)\.(jpg|webp)$', p)
-        if m and (cap is None or int(m.group(1)) <= cap):
-            out.append((int(m.group(1)), '/' + os.path.relpath(p, SITE)))
+        m = re.search(r'-(\d+)\.jpg$', p)
+        if m: out.append((int(m.group(1)), '/' + os.path.relpath(p, SITE)))
     return sorted(out)
-p45j, p45w = have('rayco-rg45x-4x5-*.jpg', DESK_CAP), have('rayco-rg45x-4x5-*.webp', DESK_CAP)
-p32j, p32w = have('rayco-rg45x-3x2-*.jpg'), have('rayco-rg45x-3x2-*.webp')
-full = glob.glob(os.path.join(H, 'rayco-rg45x-full-*.jpg'))
-if not (p45j and p32j and full): sys.exit('hero assets missing')
 ss = lambda L: ', '.join(f'{p} {wd}w' for wd, p in L)
-mid = [x for x in p32j if x[0] == 1200] or p32j[-1:]
 desk = '(max-width: 1199px) 50vw, 55vw'
-pic = ['<picture>']
-if p45w: pic.append(f'<source media="(min-width: 960px)" type="image/webp" srcset="{ss(p45w)}" sizes="{desk}">')
-pic.append(f'<source media="(min-width: 960px)" srcset="{ss(p45j)}" sizes="{desk}">')
-if p32w: pic.append(f'<source type="image/webp" srcset="{ss(p32w)}" sizes="100vw">')
-pic.append(f'<img src="{mid[0][1]}" srcset="{ss(p32j)}" sizes="100vw" width="1200" height="800" fetchpriority="high" decoding="async" data-full="/{os.path.relpath(full[0], SITE)}" alt="Yellow Rayco RG45X stump grinder parked on wood chips in a fenced backyard">')
-pic.append('</picture>')
-pre = []
-if p32w: pre.append(f'<link rel="preload" as="image" type="image/webp" imagesrcset="{ss(p32w)}" imagesizes="100vw" media="(max-width: 959px)" fetchpriority="high" />')
-if p45w: pre.append(f'<link rel="preload" as="image" type="image/webp" imagesrcset="{ss(p45w)}" imagesizes="{desk}" media="(min-width: 960px)" fetchpriority="high" />')
+pic, pre = [], []
+for n, (name, alt, full) in enumerate(HERO_SLIDES):
+    p45, p32 = have(name + '-4x5-*.jpg'), have(name + '-3x2-*.jpg')
+    if not (p45 and p32 and os.path.isfile(os.path.join(SITE, full.lstrip('/')))): sys.exit('hero assets missing for ' + name)
+    first = n == 0
+    # Only the first slide carries real URLs. The others sit under it at opacity 0, where loading="lazy" would not
+    # hold them back, so they carry data-src/data-srcset and assets/site.js fills them in once the page has loaded.
+    d = '' if first else 'data-'
+    pic.append(f'<picture class="hero-slide{" is-on" if first else ""}">')
+    pic.append(f'<source media="(min-width: 960px)" {d}srcset="{ss(p45)}" sizes="{desk}">')
+    extra = 'fetchpriority="high"' if first else 'aria-hidden="true"'
+    pic.append(f'<img {d}src="{p32[-1][1]}" {d}srcset="{ss(p32)}" sizes="100vw" width="1200" height="800" {extra} decoding="async" data-full="{full}" alt="{alt}">')
+    pic.append('</picture>')
+    if first:
+        pre.append(f'<link rel="preload" as="image" imagesrcset="{ss(p32)}" imagesizes="100vw" media="(max-width: 959px)" fetchpriority="high" />')
+        pre.append(f'<link rel="preload" as="image" imagesrcset="{ss(p45)}" imagesizes="{desk}" media="(min-width: 960px)" fetchpriority="high" />')
 HERO_PICTURE = '\n        '.join(pic)
 PRELOAD = '\n'.join(pre)
 

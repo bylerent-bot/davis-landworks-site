@@ -134,8 +134,15 @@ p,blockquote,li{text-wrap:pretty}
 .hero-call a{position:relative;color:#fff;font-weight:700;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px}
 .hero-photo{position:relative;margin:0;overflow:hidden;background:var(--black-2)}
 .hero-photo picture,.hero-photo img{position:absolute;inset:0;width:100%;height:100%}
-.hero-photo img{object-fit:cover;object-position:50% 56%;cursor:zoom-in}
-.hero-photo figcaption{position:absolute;right:16px;bottom:14px;padding:7px 10px;background:rgba(11,10,9,.74);color:var(--ivory);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
+.hero-photo img{object-fit:cover;object-position:50% 50%;cursor:zoom-in}
+.hero-slide{z-index:0;opacity:0;pointer-events:none;transition:opacity 0s linear .9s}
+.hero-slide.is-on{z-index:1;opacity:1;pointer-events:auto;transition:opacity .9s ease}
+.hero-dots{position:absolute;right:14px;bottom:14px;z-index:3;display:flex;align-items:center;gap:2px;padding:4px 6px;background:rgba(11,10,9,.74)}
+.hero-dots button{position:relative;width:28px;height:28px;padding:0;border:0;background:none;color:var(--ivory);cursor:pointer}
+.hero-dots .dot::before{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;border:1.5px solid var(--ivory)}
+.hero-dots .dot[aria-current="true"]::before{background:var(--gold);border-color:var(--gold)}
+.hero-dots .hold{margin-left:4px;font-size:11px;line-height:1;letter-spacing:.06em}
+.hero-dots button:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
 
 /* clickable photos: visible focus frame */
 .work-gallery img:focus-visible,.hero-photo img:focus-visible{outline:none}
@@ -394,6 +401,28 @@ p,blockquote,li{text-wrap:pretty}
 .photo-walk figcaption{margin-top:12px;color:var(--muted);font-size:15px;line-height:1.5}
 .photo-walk.tall{grid-template-columns:repeat(4,minmax(0,1fr))}
 .photo-walk.tall img{aspect-ratio:2/3}
+/* before and after: two registered photos stacked, the top (after) one clipped from the left at --pos. A full-size invisible range input
+   is the control, so dragging, tapping and the arrow keys all work; the site script copies its value into --pos. */
+.ba-section{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,520px);gap:clamp(32px,6vw,96px);align-items:center}
+.ba-copy h2{margin-bottom:18px}
+.ba-copy .gallery-foot{justify-content:flex-start;margin-top:32px}
+.ba{margin:0}
+.ba-frame{--pos:50%;position:relative;aspect-ratio:3/4;overflow:hidden;background:#d8cdbb}
+.ba-img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover}
+.ba-top{clip-path:inset(0 0 0 var(--pos))}
+.ba-tag{position:absolute;top:12px;padding:6px 10px;font-size:12px;font-weight:600;line-height:1.2;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
+.ba-tag-before{left:12px;background:rgba(11,10,9,.78);color:var(--ivory)}
+.ba-tag-after{right:12px;background:var(--gold);color:var(--black)}
+.ba-range{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;opacity:0;cursor:ew-resize;touch-action:pan-y;-webkit-appearance:none;appearance:none;background:none}
+.ba-range::-webkit-slider-thumb{-webkit-appearance:none;width:1px;height:1px}
+.ba-range::-moz-range-thumb{width:1px;height:1px;border:0}
+.ba-line{position:absolute;top:0;bottom:0;left:var(--pos);width:3px;margin-left:-1.5px;background:var(--gold);pointer-events:none}
+.ba-knob{position:absolute;top:50%;left:clamp(26px,var(--pos),calc(100% - 26px));display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:var(--gold);color:var(--black);border:2px solid var(--ivory);font-size:22px;font-weight:700;line-height:1;letter-spacing:2px;padding-bottom:3px;box-shadow:0 2px 10px rgba(11,10,9,.4);pointer-events:none}
+.ba-range:focus-visible~.ba-knob{outline:3px solid transparent;outline-offset:2px;box-shadow:0 0 0 3px var(--black),0 0 0 6px var(--ivory)}
+@media (forced-colors:active){.ba-line{background:CanvasText}.ba-knob{border-color:CanvasText}.ba-range:focus-visible~.ba-knob{outline-color:Highlight}}
+.ba-hint{margin-top:10px;color:var(--muted);font-size:14px}
+.prose-photo{margin:0;max-width:440px}
+.prose-photo img{display:block;width:100%;height:auto;background:#d8cdbb}
 .photo-walk img:focus-visible{outline:none}
 .photo-walk figure:has(img:focus-visible)::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;outline:3px solid var(--gold);outline-offset:-3px;box-shadow:inset 0 0 0 6px var(--black)}
 @supports not selector(:has(*)){
@@ -436,13 +465,15 @@ p,blockquote,li{text-wrap:pretty}
   .footer-contact{text-align:left}
 }
 @media (max-width:959px){
+  .ba-section{grid-template-columns:1fr;gap:28px}
+  .ba{max-width:520px}
+  .ba-copy .gallery-foot{margin-top:22px}
   .two-col{grid-template-columns:1fr;gap:32px}
   .plain-steps{grid-template-columns:1fr;gap:18px}
   .page-hero .lede{margin:12px 0 20px;font-size:17px;line-height:1.55}
   .hero{grid-template-columns:1fr;min-height:0;padding-left:0}
   .hero-photo{order:-1;aspect-ratio:3/2}
-  .hero-photo img{object-position:50% 55%}
-  .hero-photo figcaption{display:none}
+  .hero-dots{right:10px;bottom:10px}
   .hero-text{padding:22px var(--pad) 36px}
   .hero-copy{max-width:640px}
   .hero .lede{margin:12px 0 20px;font-size:17px;line-height:1.55}
@@ -517,11 +548,11 @@ p,blockquote,li{text-wrap:pretty}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .work-gallery img,.mobile-actions{transition:none}
+  .work-gallery img,.mobile-actions,.hero-slide{transition:none}
   .work-gallery figure:hover img{transform:none}
 }
 </style>
-<noscript><style>#estimate-form,.steps{display:none}.mobile-actions{transform:none;visibility:visible}</style></noscript>
+<noscript><style>#estimate-form,.steps{display:none}.mobile-actions{transform:none;visibility:visible}.ba-range,.ba-line,.ba-knob,.ba-hint{display:none}</style></noscript>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -785,6 +816,6 @@ p,blockquote,li{text-wrap:pretty}
 
 <p id="photo-hint" hidden>Opens the photo full size</p>
 
-<script src="/assets/site.js?v=9b462eba21" defer></script>
+<script src="/assets/site.js?v=8f21e7f242" defer></script>
 </body>
 </html>

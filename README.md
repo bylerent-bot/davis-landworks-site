@@ -27,7 +27,8 @@ stump grinding, grading, light excavation, hauling and cleanup in Hampton Roads.
     `<!--ifnot:key-->` the reverse; the form note and the privacy page switch on `lead_api_base` this way.
   - `styles.css`: edited directly, but no page loads it. The build inlines it into every page as a `<style>` block,
     so a CSS edit does nothing on the live site until you rebuild.
-  - `assets/site.js`: the estimate form, the phone action bar and the photo viewer. Every page loads it once, with a
+  - `assets/site.js`: the estimate form, the phone action bar, the photo viewer, the before-and-after slider and the home
+  hero's photo rotation. Every page loads it once, with a
     hash of its content in the query string so a change is never served from an old cache. It holds no business
     fact: the phone, email, API base and Turnstile key reach it through data attributes on the form, which the
     build fills from `site.json`. The build refuses a phone number, email or dash inside it.
@@ -35,7 +36,7 @@ stump grinding, grading, light excavation, hauling and cleanup in Hampton Roads.
   relative `assets/` path.
 - After any edit to a template, partial, `site.json`, `styles.css` or `site.js`, run `python3 _build/build_index.py`.
   It writes the pages, `404.html` and `sitemap.xml`, inlines the icon sprite (`_build/icons.svg`) and Harrison's
-  vector logo (`assets/davis-landworks-logo.svg`) as SVG symbols, and writes the hero `<picture>` from the files
+  vector logo (`assets/davis-landworks-logo.svg`) as SVG symbols, and writes the hero slides from the files
   in `assets/hero/` wherever a page says `%%HERO_PICTURE%%`.
 - The build checks each page: one `h1`, a title of 65 characters or fewer and a description of 160 or fewer, both
   unique across the site, canonical and `og:url` matching the page's path (a noindex page carries the robots tag
@@ -77,9 +78,12 @@ stump grinding, grading, light excavation, hauling and cleanup in Hampton Roads.
 
 ## Assets
 - `assets/davis-landworks-logo.svg` and `-reversed.svg`: vector rebuild of Harrison's logo.
-- `assets/hero/`: the Rayco RG45X photo in 4:5 (desktop) and 3:2 (phones), JPEG and WebP.
-- `assets/work/`: grading photos at 800, 1200 and 1600 wide, plus `-full` portrait versions for
-  the full-screen viewer.
+- `assets/hero/`: the home hero's finished-yard slides, `yard-*-4x5` (desktop) and `yard-*-3x2` (phones) at 800 and
+  1200 wide, JPEG, listed in `HERO_SLIDES` in `_build/build_index.py`. The grinder photo (`rayco-rg45x-3x2-800` and
+  `-1200`) is now only the small photo on the stump page; its other sizes are unreferenced.
+- `assets/work/`: grading photos at 800, 1200 and 1600 wide, and each with a `-full` portrait version for the
+  full-screen viewer, and the before-and-after pair (`ba-*`) at 600, 900 and 1200. The pair is registered (the before
+  frame warped to match the after) so the slider in `_build/partials/before_after.html` lines up.
 - All photos are tone and crop edits only, with metadata stripped.
 - `_build/icons.svg`: four Lucide icons (arrow-right, check, message-square-text, phone), used under
   the licenses in `_build/LICENSE-lucide.txt`. The stump diagram in `_build/partials/stump_guide.html` is drawn
